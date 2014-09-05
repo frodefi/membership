@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="form-group"
+       ng-class="{ 'has-error':!form.username.$error.promiseReturned &&
+                                form.username.$invalid &&
+                               !form.username.$pristine  &&
+                               !form.username.$focused}">
+    <label for="username" class="col-sm-3 control-label">Username</label>
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             id="username"
+             name="username"
+             placeholder="Your public username"
+             ng-model="userForm.username"
+             ng-minlength=2
+             ng-maxlength=20
+             ff-focus
+             required
+             ff-ensure-unique-username>
+    </div>
+    <div class="col-sm-4 help-block">
+      <div ng-show="!form.username.$error.promiseReturned &&
+                     form.username.$dirty &&
+                     form.username.$invalid &&
+                    !form.username.$focused">
+        <span ng-show="form.username.$error.required">Please input a username</span>
+        <span ng-show="form.username.$error.minlength">Your username is required to be at least 2 characters</span>
+        <span ng-show="form.username.$error.maxlength">Your username cannot be longer than 20 characters</span>
+        <span ng-show="!form.username.$error.promiseReturned &&
+                        form.username.$error.unique">That username is taken, please try another</span>
+      </div>
+      <span class="green"
+            ng-show="!form.username.$error.promiseReturned &&
+                     !form.username.$invalid &&
+                     !form.username.$error.unique &&
+                     !form.username.$focused">
+        Username is available :)
+      </span>
+    </div>
+  </div>
+</div>

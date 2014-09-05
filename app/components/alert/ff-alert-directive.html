@@ -1,0 +1,7 @@
+<div class="row">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-10">
+    <div alert ng-repeat="alert in alerts.list" type="{{alert.type}}" ng-show="alert.isVisible" close="alerts.close(alert.id)">{{alert.msg}}</div>
+  </div>
+  <div class="col-sm-1"></div>
+</div>

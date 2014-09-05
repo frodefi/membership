@@ -24,5 +24,18 @@ build/Release
 # see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
 node_modules
 
+#Bower - Should perhaps remove this later on to lock down the components
+app/bower_components
+
+# A component that should be in bower but it is not...
+app/components/kinvey-angular-1.1.8.js
+
+#Grunt created files
+dist
+.tmp
+
 # IDEA editor
 .idea
+
+# OSX thing
+.DS_Store

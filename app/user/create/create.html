@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>Register</h3>
+    </div>
+  </div>
+  <form class="form-horizontal" role="form" name="form" novalidate ng-submit="createUser(username)">
+    <!--<div ng-include="'user/social.html'"></div>-->
+    <div ff-alert=""></div>
+    <div ng-include="'user/email-input-field.html'"></div>
+    <div ng-include="'user/username-input-field.html'"></div>
+    <div ng-include="'user/password-input-field.html'"></div>
+    <div ng-include="'user/password-confirm-input-field.html'"></div>
+    <div class="row">
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <button type="submit" class="btn btn-default" ng-disabled="form.$invalid">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="form-group" ng-class="{'has-error': form.email.$dirty && form.email.$invalid && !form.email.$focused}">
+    <label for="email" class="col-sm-3 control-label">Email</label>
+    <div class="col-sm-5">
+      <input type="email"
+             class="form-control"
+             id="email"
+             name="email"
+             placeholder="Your email address"
+             ng-model="userForm.email"
+             ff-focus
+             required>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="form.email.$dirty && form.email.$invalid && !form.email.$focused">
+          <span ng-show="form.email.$error.required">
+            Your email is required.
+          </span>
+          <span ng-show="form.email.$error.email">
+            That is not a valid email. Please input a valid email.
+          </span>
+    </div>
+  </div>
+</div>
