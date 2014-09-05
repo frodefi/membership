@@ -1,6 +1,6 @@
 # Logs
 logs
-*.log
+#*.log
 
 # Runtime data
 pids
@@ -33,6 +33,7 @@ app/components/kinvey-angular-1.1.8.js
 #Grunt created files
 dist
 .tmp
+.sass-cache
 
 # IDEA editor
 .idea
