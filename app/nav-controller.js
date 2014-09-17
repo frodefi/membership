@@ -1,6 +1,8 @@
 angular.module('app.controllers')
   .controller('NavCtrl', ['$scope','$rootScope','$location','userService','alertService',function($scope,$rootScope,$location,userService,alertService) {
-    $scope.user = userService;
+    $scope.user = {}; // userService;
+    $scope.user.account = userService.account;
+
     $scope.alerts = alertService;
     $scope.logout = function() {
       if ($scope.user.authenticated) {
@@ -21,12 +23,5 @@ angular.module('app.controllers')
     $scope.isActive = function (viewLocation) {
       return viewLocation === $location.path();
     };
-
-/*
-    $scope.$watch("$scope.user.checkAuthenticated()", function(newValue,oldValue) {
-      $scope.user.authenticated = newValue;
-      console.log("----------------navbarctrl-watch",newValue,oldValue);
-    },true);
-*/
 
   }]);

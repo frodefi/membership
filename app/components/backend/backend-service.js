@@ -3,7 +3,6 @@ angular.module('backendModule')
     var backend = {};
 
     backend.init = function(appCredentials) {
-      console.log("backendService", appCredentials);
       var promise = $kinvey.init(appCredentials);
       promise.then(function (user) {
         console.log("backendService.init - User:", user);

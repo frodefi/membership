@@ -15,6 +15,7 @@
   <!-- endbower -->
   <!-- endbuild -->
   <!-- build:css({.tmp,app}) styles/app.css -->
+  <link rel="stylesheet" href="styles/app.css">
   <!-- endbuild -->
 </head>
 <body ng-app="app">
@@ -24,7 +25,7 @@
 
   <div ng-include="'nav.html'"></div>
 
-  <div class="container" app-view-segment="0">Loading the Classified Ads App - Please wait a sec...</div>
+  <div class="container" ng-view>Loading the Classified Ads App - Please wait a sec...</div>
 
   <!--[if lt IE 9]>
   <script src="bower_components/es5-shim/es5-shim.js"></script>

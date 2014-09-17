@@ -1,6 +1,6 @@
 angular.module('backendModule')
-  .factory('backendUserService', ['$rootScope', '$kinvey',
-    function($rootScope, $kinvey) {
+  .factory('backendUserService', ['$kinvey',
+    function($kinvey) {
       var user = {};
 
       user.init = function () {
@@ -22,12 +22,10 @@ angular.module('backendModule')
       };
 
       user.register = function (credentials) {
-        console.log("backend-user register...",credentials);
         return $kinvey.User.signup(credentials);
       };
 
       user.sendConfirmationEmail = function (username) {
-        console.log("backend-user email...",username);
         return $kinvey.User.verifyEmail(username);
       };
 

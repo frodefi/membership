@@ -7,7 +7,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#/">AngularTest</a>
+      <a class="navbar-brand" href="#/">Yacht Club</a>
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse" collapse="navCollapsed  && 'in'" ng-click="navCollapsed=true">
       <ul class="nav navbar-nav">
@@ -15,10 +15,9 @@
         <li ng-class="{ active: isActive('/blogpost')}"><a href="#/blogpost">News</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li ng-class="{ active: isActive('/user')}" ng-show="user.authenticated"><a href="#/user">{{user.username}}&nbsp;overview</a></li>
+        <li ng-class="{ active: isActive('/user')}" ng-show="true"><a href="#/user">{{user.account.username}}&nbsp;overview</a></li>
         <li ng-class="{ active: isActive('/user/login')}" ng-hide="user.authenticated"><a href="#/user/login">Login</a></li>
         <li ng-class="{ active: isActive('/user/create')}" ng-hide="user.authenticated"><a href="#/user/create">Register</a></li>
-        <li ng-class="{ active: isActive('/user/details')}" ng-show="user.authenticated"><a href="#/user/details">{{user.username}}&nbsp;details</a></li>
         <li ng-show="user.authenticated"><a href="#/user/logout" ng-click="logout()">Logout</a></li>
       </ul>
     </div>

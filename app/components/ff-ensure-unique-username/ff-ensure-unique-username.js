@@ -12,9 +12,7 @@ angular.module('ffEnsureUniqueUsernameModule', ['userModule','alertModule'])
       });
 */
       element.bind('blur', function(evt) {
-        console.log("hei...");
         var username = scope['userForm']['username'];
-        console.log("promise son...",username );
         if (username && username.length>0) {
           ctrl.$setValidity('promiseReturned', false);
           var promise = user.exists(username);

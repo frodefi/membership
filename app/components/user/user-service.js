@@ -1,20 +1,31 @@
 angular.module('userModule', ['backendModule'])
-  .factory('userService', ['$rootScope', 'backendUserService',
-    function($rootScope,backendUserService) {
+  .factory('userService', ['backendUserService','dataService',
+    function(backendUserService, dataService) {
       var user = {
         _id: "",
-        username: "",
-        email: "",
-        name: "",
         initiated: false,
         authenticated: false
       };
 
+      // Perhaps email property belongs in profile instead? I have leaned towards account, because I
+      // want all changes in account to be verified by the user by entering current password,
+      // which is not needed for profile fields changes
+      user.account = {
+        username: "",
+        email: ""
+      };
+
+      user.profile = {
+        name: ""
+      };
+
+
       user.init = function(initialUser) {
         if (initialUser) {
-          for (var property in initialUser) user[property] = initialUser[property];
+          copyProperties(initialUser);
           user.authenticated = true;
           user.initiated = true;
+          dataService.init();
         }
       };
 
@@ -32,12 +43,10 @@ angular.module('userModule', ['backendModule'])
         var promise = backendUserService.register(credentials);
         promise.then(
           function (newUser) {
-            console.log("user-service register success: ",newUser);
-            user.authenticated = true;
             user.init(newUser,true);
           },
           function (error) {
-            console.log("userService-login error:",credentials,error);
+            console.log("userService-login error:",error);
           }
         );
         return promise;
@@ -48,14 +57,11 @@ angular.module('userModule', ['backendModule'])
       };
 
       user.login = function (provider, credentials) {
-        console.log("userService-login creds:",credentials);
         var promise = backendUserService.login(provider, credentials);
         promise.then(function (success){
-          console.log("userService-login success :",success);
-          user.authenticated = true;
-          for (var property in success) user[property] = success[property];
+          user.init(newUser,true);
         }, function (error) {
-          console.log("userService-login error:",credentials,error);
+          console.log("userService-login error:",error);
         });
         return promise;
       };
@@ -63,6 +69,7 @@ angular.module('userModule', ['backendModule'])
       user.logout = function() {
         user.authenticated = false;
         return promise = backendUserService.logout();
+        dataService.logout();
       };
 
       user.update = function(newUserData) {
@@ -70,5 +77,17 @@ angular.module('userModule', ['backendModule'])
       };
 
       return user;
+
+      function copyProperties (userDetails) {
+        for (var property in userDetails) {
+          if (['username','email'].indexOf(property) >= 0) {
+            user.account[property] = userDetails[property];
+          } else if (['fullName','address'].indexOf(property) >= 0) {
+            user.profile[property] = userDetails[property];
+          } else {
+            user[property] = userDetails[property];
+          }
+        }
+      }
     }
   ]);

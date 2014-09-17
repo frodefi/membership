@@ -2,12 +2,41 @@
   <div class="row">
     <div class="col-sm-12">
       <h3>User-page</h3>
+N:{{details.membership.current}}
+      M:{{details.membership.statusOptions}}
     </div>
   </div>
   <div ff-alert=""></div>
-  <div class="row">
-    <div class="col-sm-12">
-      Various user-related info...
-    </div>
-  </div>
+  <accordion close-others="'true'">
+    <accordion-group heading="Account Settings" is-open="details.account.open">
+      <form class="form-horizontal" role="form" name="form" novalidate ng-submit="details.save('group')">
+        <div ff-include="user/email-input-field.html"></div>
+        <div ff-include="user/username-input-field.html"></div>
+        <div ff-include="user/password-input-field.html"></div>
+        <div ff-include="user/password-confirm-input-field.html"></div>
+        <div ff-include="user/submit-button.html"></div>
+      </form>
+    </accordion-group>
+    <accordion-group heading="Profile" is-open="details.profile.open">
+      <form class="form-horizontal" role="form" name="form" novalidate ng-submit="details.save('profile')">
+        <div ff-include="user/profile-form-fields.html"></div>
+        <div ff-include="user/submit-button.html"></div>
+      </form>
+    </accordion-group>
+    <accordion-group heading="Membership" is-open="details.membership.open" ng-show="details.membership">
+      <form class="form-horizontal" role="form" name="form" novalidate ng-submit="details.save('membership')">
+        <div ff-include="user/timestamps.html" model="membership"></div>
+        <div ff-include="user/membership-form-fields.html"></div>
+        <div ff-include="user/submit-button.html"></div>
+      </form>
+    </accordion-group>
+    <accordion-group heading="Boat Details" is-open="details.boat.open" ng-show="details.boat.exists">
+      <form class="form-horizontal" role="form" name="form" novalidate ng-submit="details.save('boat')">
+        <div ff-include="user/boat-details-form-fields.html"></div>
+        <div ff-include="user/submit-button.html"></div>
+      </form>
+    </accordion-group>
+  </accordion>
+  <div><a href="" ng-click="details.add('boat')">Add boat</a></div>
+  <div>&nbsp;</div>
 </div>
