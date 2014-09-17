@@ -6,7 +6,7 @@ angular.module('ffIncludeModule', [])
         var templatePath = attrs.ffInclude;
         scope.model = attrs.model;
         if (templatePath.indexOf("timestamps") > -1) { console.log("attrs.model:",attrs.model," scope.model:",scope.model); }
-        scope.model = "membership";
+        // scope.model = "membership";
         $http.get(templatePath, {
           cache: $templateCache
         }).success(function(response) {

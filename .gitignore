@@ -28,7 +28,7 @@ node_modules
 app/bower_components
 
 # A component that should be in bower but it is not...
-app/components/kinvey-angular-1.1.8.js
+#app/components/kinvey-angular-1.1.8.js
 
 #Grunt created files
 dist
