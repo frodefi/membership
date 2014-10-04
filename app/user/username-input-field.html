@@ -1,17 +1,19 @@
 <div class="row">
   <div class="form-group"
-       ng-class="{ 'has-error':!form.username.$error.promiseReturned &&
+       ng-class="{ 'has-error': model.data.username !== model.pristine.username &&
+                               !form.username.$error.promiseReturned &&
                                 form.username.$invalid &&
-                               !form.username.$pristine  &&
-                               !form.username.$focused}">
+                               !form.username.$pristine}">
     <label for="username" class="col-sm-3 control-label">Username</label>
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.viewMode=false; model.setShowHelp('username')"
              id="username"
              name="username"
-             placeholder="Your public username"
-             ng-model="details.account.username"
+             placeholder="Enter your public username"
+             ng-model="model.data.username"
              ng-minlength=2
              ng-maxlength=20
              ff-focus
@@ -21,20 +23,26 @@
     <div class="col-sm-4 help-block">
       <div ng-show="!form.username.$error.promiseReturned &&
                      form.username.$dirty &&
-                     form.username.$invalid &&
-                    !form.username.$focused">
-        <span ng-show="form.username.$error.required">Please input a username</span>
-        <span ng-show="form.username.$error.minlength">Your username is required to be at least 2 characters</span>
-        <span ng-show="form.username.$error.maxlength">Your username cannot be longer than 20 characters</span>
-        <span ng-show="!form.username.$error.promiseReturned &&
+                     form.username.$invalid">
+        <span ng-show= "form.username.$error.required">Please input a username</span>
+        <span ng-show= "form.username.$error.minlength">Your username is required to be at least 2 characters</span>
+        <span ng-show= "form.username.$error.maxlength">Your username cannot be longer than 20 characters</span>
+        <span ng-show=" model.data.username &&
+                        model.data.username !== model.pristine.username &&
+                       !form.username.$error.minlength &&
+                       !form.username.$error.promiseReturned &&
                         form.username.$error.unique">That username is taken, please try another</span>
       </div>
       <span class="green"
             ng-show="!form.username.$error.promiseReturned &&
                      !form.username.$invalid &&
                      !form.username.$error.unique &&
-                     !form.username.$focused">
+                      model.data.username !== model.pristine.username">
         Username is available :)
+      </span>
+      <span class="green"
+            ng-show="model.showHelp.username && model.data.username && model.data.username === model.pristine.username">
+        Your current username
       </span>
     </div>
   </div>

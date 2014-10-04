@@ -18,10 +18,9 @@ angular.module('ffAssertEqualModule', [])
           otherValue = otherValue[otherModelNameParts[i]];
         }
         var equalsSoFar = true;
-        var equals      = true;
+        var equals      = newThisValue == otherValue;
         if (newThisValue && newThisValue.length > 0) {
           equalsSoFar = newThisValue == otherValue.substring(0, newThisValue.length);
-          equals = newThisValue == otherValue;
         }
         ctrl.$setValidity('equalsSoFar', equalsSoFar);
         ctrl.$setValidity('equals', equals);
@@ -32,9 +31,13 @@ angular.module('ffAssertEqualModule', [])
         for (var i = 0; i < thisModelNameParts.length; i++) {
           thisValue = thisValue[thisModelNameParts[i]];
         }
+        var equals = thisValue == newOtherValue;
+        ctrl.$setValidity('equals', equals);
+/*
         if (thisValue && thisValue.length > 0) {
           ctrl.$setValidity('equals', thisValue == newOtherValue);
         }
+*/
       });
     };
     return directive;

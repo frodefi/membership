@@ -1,8 +1,11 @@
 'use strict';
 
-angular.module('app', ['app.config','app.controllers','userModule','dataModule','alertModule',
-                       'ffFocusModule', 'ffAssertEqualModule', 'ffEnsureUniqueUsernameModule', 'ffIncludeModule',
-                       'ngSanitize','ui.bootstrap', 'ui.utils','ngRoute']); // 'ngAnimate','ngStorage','ngCookies'
+angular.module('app', ['app.config','app.controllers','userModule','dataModule','alertModule','commonModule','backendModule',
+                       'ffFocusModule','ffAssertEqualModule','ffEnsureUniqueUsernameModule','ffIncludeModule',
+                       'ngSanitize','ui.bootstrap','ui.utils','ngRoute','view-segment','route-segment',
+                       'ngAnimate']); // 'ngAnimate','ngStorage','ngCookies'
 
-angular.module('app.config',['backendModule','userModule','ngRoute']);
-angular.module('app.controllers',['userModule','alertModule']); // 'ffBlogPostModule'
+//angular.module('app.config',[]);
+angular.module('app.controllers',['ngAnimate']);
+angular.module('app.config',['ngAnimate','backendModule','userModule','ngRoute','route-segment']);
+//angular.module('app.controllers',['userModule','alertModule']);

@@ -6,7 +6,6 @@ angular.module('alertModule').factory('alertService', ['$timeout',function($time
 
   alerts.add = function(alert) {
     alert.id = id;
-    alert.isVisible = true;
     alerts.list.push(alert);
     function timeoutCallback(id) {
       return function (){

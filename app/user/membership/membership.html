@@ -1,0 +1,39 @@
+<div ng-include="'user/timestamps.html'"></div>
+<form class="form-horizontal" role="form" name="form" novalidate ng-submit="model.save()">
+  <div class="row">
+    <div class="form-group">
+      <label for="status" class="col-sm-3 control-label">Status</label>
+
+      <div class="col-sm-5">
+        <div ng-class="{'custom-select': model.viewMode}">
+          <select class="form-control"
+                  ng-focus="model.viewMode=false; model.setShowHelp('status')"
+                  id="status"
+                  name="status"
+                  ng-options="status.name as status.text for status in model.statusOptions"
+                  ng-model="model.data.status">
+          </select>
+        </div>
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.status">The current status of this role</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label for="fullName" class="col-sm-3 control-label">Managers full name</label>
+
+      <div class="col-sm-5">
+        <input type="text"
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.viewMode=false; model.setShowHelp('fullName')"
+               id="fullName"
+               name="fullName"
+               placeholder="Managers full name"
+               ng-model="model.data.fullName">
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.fullName">Your full name</div>
+    </div>
+  </div>
+  <div ng-include="'user/submit-button.html'"></div>
+</form>

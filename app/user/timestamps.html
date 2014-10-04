@@ -1,10 +1,9 @@
 <div class="row">
   <div class="col-sm-3"></div>
   <div class="col-sm-8">
-      <span class=" pull-right" ng-show="true">
-        Model:{{model}}<br>
-        <b>Last updated:</b> {{details.membership.current.lastModified|date:'d-M-yyyy HH:mm'}}
-        <b>Created:</b> {{details[model].current.createdAt|date:'d-M-yyyy HH:mm'}}
+      <span class=" pull-right" ng-show="model.data.lastModified">
+        <b>Last updated:</b> {{model.data.lastModified|date:'d-M-yyyy HH:mm'}}
+        <b>Created:</b> {{model.data.createdAt|date:'d-M-yyyy'}}
       </span>
   </div>
 </div>

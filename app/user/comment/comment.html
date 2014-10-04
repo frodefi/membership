@@ -1,0 +1,22 @@
+<div ng-include="'user/timestamps.html'"></div>
+<form class="form-horizontal" role="form" name="form" novalidate ng-submit="model.save()">
+  <div class="row">
+    <div class="form-group">
+      <label for="comment" class="col-sm-3 control-label">Comment</label>
+
+      <div class="col-sm-5">
+        <textarea
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.viewMode=false; model.setShowHelp('comment')"
+               id="comment"
+               name="comment"
+               placeholder="Enter any additional information you me have"
+               ng-model="model.data.comment">
+          </textarea>
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.fullName">Any additional information you me have</div>
+    </div>
+  </div>
+  <div ng-include="'user/submit-button.html'"></div>
+</form>

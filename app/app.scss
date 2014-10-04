@@ -65,3 +65,120 @@ body { padding-top: 50px; }
   color: green;
 }
 // --- end username-input-field ---
+
+// --- various ----
+.top-buffer { margin-top:20px; }
+
+.no-border {
+  border: 0;
+  box-shadow: none;
+}
+
+.anim.ng-enter {
+  transition: opacity 1s;
+  opacity: 0.0;
+}
+
+.anim.ng-enter-active {
+  opacity: 2.0;
+}
+.anim.ng-leave {
+  display: none;
+}
+
+.repeat-item.ng-enter,
+.repeat-item.ng-leave {
+  -webkit-transition:1s linear all;
+  transition:0.5s linear all;
+}
+
+.repeat-item.ng-enter,
+.repeat-item.ng-leave.ng-leave-active {
+  opacity:0;
+  max-height: 0;
+}
+.repeat-item.ng-leave,
+.repeat-item.ng-enter.ng-enter-active {
+  opacity:1;
+  max-height: 100px;
+}
+
+// --- end various ----
+
+// --- Trick to remove dropdown-arrows in forms
+// --- To be used as "view-mode" (to hide the dropdown-symbol
+// --- For details, see http://www.currelis.com/hiding-select-arrow-firefox-30.html
+// --- Code copied from http://jsbin.com/pozomu/4/edit
+
+.custom-select {
+  background-color: #fff;
+  border: 0 none;
+  box-shadow: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 0;
+  padding: 0;
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.custom-select:hover {
+  border-color: #999;
+}
+
+.custom-select:before {
+  color: #333;
+  display: block;
+  font-family: 'FontAwesome';
+  font-size: 1em;
+  height: 100%;
+  line-height: 2.5em;
+  padding: 0 0.625em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: center;
+  width: 1em;
+  z-index: -1;
+}
+
+.custom-select select {
+  background-color: transparent;
+  border: 0 none;
+  box-shadow: none;
+  color: #333;
+  display: block;
+  font-size: 100%;
+  line-height: normal;
+  margin: 0;
+  padding: .5em;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.custom-select select::-ms-expand {
+  display: none; /* to ie 10 */
+}
+
+.custom-select select:focus {
+  outline: none;
+}
+
+/* little trick for custom select elements in mozilla firefox  17/06/2014 @rodrigoludgero */
+
+/* pseudo class https://developer.mozilla.org/en-US/docs/Web/CSS/:any */
+
+:-moz-any(.custom-select):before {
+  background-color: #fff; /* this is necessary for overcome the caret default browser */
+  pointer-events: none; /* https://developer.mozilla.org/en-US/docs/Web/CSS/pointer-events  */
+  z-index: 1; /* this is necessary for overcome the pseudo element */
+}
+
+// --- End dropdown-trick

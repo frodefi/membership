@@ -1,0 +1,84 @@
+<div ng-include="user/timestamps.html" model="boat"></div>
+<form class="form-horizontal" role="form" type="form" novalidate ng-submit="model.save()">
+  <div class="row">
+    <div class="form-group">
+      <label for="name" class="col-sm-3 control-label">Name</label>
+      <div class="col-sm-5">
+        <input type="text"
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.viewMode=false"
+               id="name"
+               name="name"
+               placeholder="Enter the name of the boat"
+               ng-model="model.data.name">
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.name">Name of boat</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label for="reg" class="col-sm-3 control-label">Registration number</label>
+      <div class="col-sm-5">
+        <input type="text"
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.viewMode=false"
+               id="reg"
+               name="reg"
+               placeholder="Enter the the boat registration number"
+               ng-model="model.data.reg">
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.reg">The boats official registration number</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label for="type" class="col-sm-3 control-label">Type</label>
+      <div class="col-sm-5">
+        <input type="text"
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.viewMode=false"
+               id="type"
+               name="type"
+               placeholder="Enter the boat type"
+               ng-model="model.data.type">
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.type">Boat type, like "Hansavik 23"</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label for="width" class="col-sm-3 control-label">Width</label>
+      <div class="col-sm-5">
+        <input type="text"
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.viewMode=false"
+               id="width"
+               name="width"
+               placeholder="Enter the width of the boat"
+               ng-model="model.data.width">
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.width">Boat width in meter, lik "2,3"</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label for="length" class="col-sm-3 control-label">Length</label>
+      <div class="col-sm-5">
+        <input type="text"
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.viewMode=false"
+               id="length"
+               name="length"
+               placeholder="Enter the length of the boat"
+               ng-model="model.data.length">
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.length">Boat length</div>
+    </div>
+  </div>
+  <div ng-include="'user/submit-button.html'"></div>
+</form>

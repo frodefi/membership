@@ -1,7 +1,13 @@
 <div class="row">
   <div class="col-sm-1"></div>
   <div class="col-sm-10">
-    <div alert ng-repeat="alert in alerts.list" type="{{alert.type}}" ng-show="alert.isVisible" close="alerts.close(alert.id)">{{alert.msg}}</div>
+    <div ng-repeat="alert in alerts.list" class="repeat-item">
+      <div class="alert alert-success" role="alert">{{alert.msg}}
+        <button type="button" class="close" ng-click="alerts.close(alert.id)">
+          <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+      </div>
+    </div>
   </div>
   <div class="col-sm-1"></div>
 </div>

@@ -4,9 +4,19 @@ angular.module('ffIncludeModule', [])
       var ddo = {};
       ddo.link = function(scope, element, attrs) {
         var templatePath = attrs.ffInclude;
-        scope.model = attrs.model;
-        if (templatePath.indexOf("timestamps") > -1) { console.log("attrs.model:",attrs.model," scope.model:",scope.model); }
-        // scope.model = "membership";
+        scope.model = "membership";
+        var model = attrs.model;
+        scope.model = attrs.model; // For some strange reason this does not get reflected in the view
+        //todo: Fix strange error that currently forces me to do the hack below
+        // Strange hack start
+//        if (true) { // set to false to skip strange hack
+          if (model === "membership") {
+            scope.model = "membership";
+          } //else if (model === "boat") {
+//            scope.model = "boat";
+//          }
+//        }
+        // Strange hack end...
         $http.get(templatePath, {
           cache: $templateCache
         }).success(function(response) {
