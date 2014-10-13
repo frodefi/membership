@@ -8,11 +8,11 @@
       <input type="text"
              class="form-control"
              ng-class="{'no-border': model.viewMode}"
-             ng-focus="model.viewMode=false"
+             ng-focus="model.setViewMode(false)"
              id="email"
              name="email"
              placeholder="Enter your email address"
-             ng-model="model.data.email"
+             ng-model="model.user.details.email"
              ff-focus
              required>
     </div>

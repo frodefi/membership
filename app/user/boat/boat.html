@@ -1,5 +1,58 @@
-<div ng-include="user/timestamps.html" model="boat"></div>
-<form class="form-horizontal" role="form" type="form" novalidate ng-submit="model.save()">
+  <div class="row">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">General:</label>
+      <div class="col-sm-9"></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="row">
+      <div class="form-group">
+        <label class="col-sm-3 control-label">Administrator</label>
+
+        <div class="col-sm-5">
+          <label class="radio-inline">
+            <input type="radio"
+                   value="self"
+                   checked
+                   name="admin"
+                   ng-focus="model.setViewMode(false); model.setShowHelp('admin')"
+                   ng-model="model.admin"> Yourself
+          </label>
+          <label class="radio-inline">
+            <input type="radio"
+                   value="other"
+                   ng-focus="model.setViewMode(false); model.setShowHelp('admin')"
+                   name="admin"
+                   ng-model="model.admin"> Another person (must be a registered user)
+          </label>
+        </div>
+        <div class="col-sm-4 help-block" ng-show="model.showHelp.admin">Who is administering the membership?</div>
+      </div>
+    </div>
+    <div class="form-group" ng-hide="model.admin==='self'">
+      <label for="search" class="col-sm-3 control-label">Find user</label>
+
+      <div class="col-sm-5">
+        <input type="text"
+               class="form-control"
+               ng-class="{'no-border': model.viewMode}"
+               ng-focus="model.setViewMode(false); model.setShowHelp('search')"
+               id="search"
+               name="search"
+               placeholder="Start typing a name of a user"
+               ng-model="model.search">
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.search">Select a administrator for your membership by
+        starting to typing the name of an existing user.
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group">
+      <label class="col-sm-3 control-label">Boat details:</label>
+      <div class="col-sm-9"></div>
+    </div>
+  </div>
   <div class="row">
     <div class="form-group">
       <label for="name" class="col-sm-3 control-label">Name</label>
@@ -7,11 +60,11 @@
         <input type="text"
                class="form-control"
                ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
+               ng-focus="model.setViewMode(false); model.setShowHelp('name')"
                id="name"
                name="name"
                placeholder="Enter the name of the boat"
-               ng-model="model.data.name">
+               ng-model="model.data.allData.thisUser.name">
       </div>
       <div class="col-sm-4 help-block" ng-show="model.showHelp.name">Name of boat</div>
     </div>
@@ -23,11 +76,11 @@
         <input type="text"
                class="form-control"
                ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
+               ng-focus="model.setViewMode(false); model.setShowHelp('reg')"
                id="reg"
                name="reg"
                placeholder="Enter the the boat registration number"
-               ng-model="model.data.reg">
+               ng-model="model.data.allData.thisUser.reg">
       </div>
       <div class="col-sm-4 help-block" ng-show="model.showHelp.reg">The boats official registration number</div>
     </div>
@@ -39,11 +92,11 @@
         <input type="text"
                class="form-control"
                ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
+               ng-focus="model.setViewMode(false); model.setShowHelp('type')"
                id="type"
                name="type"
                placeholder="Enter the boat type"
-               ng-model="model.data.type">
+               ng-model="model.data.allData.thisUser.type">
       </div>
       <div class="col-sm-4 help-block" ng-show="model.showHelp.type">Boat type, like "Hansavik 23"</div>
     </div>
@@ -55,11 +108,11 @@
         <input type="text"
                class="form-control"
                ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
+               ng-focus="model.setViewMode(false); model.setShowHelp('width')"
                id="width"
                name="width"
                placeholder="Enter the width of the boat"
-               ng-model="model.data.width">
+               ng-model="model.data.allData.thisUser.width">
       </div>
       <div class="col-sm-4 help-block" ng-show="model.showHelp.width">Boat width in meter, lik "2,3"</div>
     </div>
@@ -71,11 +124,11 @@
         <input type="text"
                class="form-control"
                ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
+               ng-focus="model.setViewMode(false); model.setShowHelp('length')"
                id="length"
                name="length"
                placeholder="Enter the length of the boat"
-               ng-model="model.data.length">
+               ng-model="model.data.allData.thisUser.length">
       </div>
       <div class="col-sm-4 help-block" ng-show="model.showHelp.length">Boat length</div>
     </div>

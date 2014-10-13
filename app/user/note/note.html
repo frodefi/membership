@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="form-group">
+    <label for="notePublic" class="col-sm-3 control-label">Public note</label>
+
+    <div class="col-sm-5">
+      <textarea
+          rows="4"
+          class="form-control"
+          ng-class="{'no-border': model.viewMode}"
+          ng-focus="model.setViewMode(false); model.setShowHelp('notePublic')"
+          id="notePublic"
+          name="notePublic"
+          placeholder="Enter any additional public information you might have"
+          ng-model="model.data.allData.thisUser.notePublic">
+      </textarea>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.notePublic">Any additional information, it will be visible
+      for all registered users.
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="noteAdmin" class="col-sm-3 control-label">Administration note</label>
+
+    <div class="col-sm-5">
+      <textarea
+          rows="4"
+          class="form-control"
+          ng-class="{'no-border': model.viewMode}"
+          ng-focus="model.setViewMode(false); model.setShowHelp('noteAdmin')"
+          id="noteAdmin"
+          name="noteAdmin"
+          placeholder="Enter any additional information relevant for the administration"
+          ng-model="model.data.allData.thisUser.noteAdmin">
+      </textarea>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.noteAdmin">Any additional information relevant for the
+      administration
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="notePrivate" class="col-sm-3 control-label">Private note</label>
+
+    <div class="col-sm-5">
+      <textarea
+          rows="4"
+          class="form-control"
+          ng-class="{'no-border': model.viewMode}"
+          ng-focus="model.setViewMode(false); model.setShowHelp('notePrivate')"
+          id="notePrivate"
+          name="notePrivate"
+          placeholder="Enter any information that is only interesting for yourself"
+          ng-model="model.data.allData.thisUser.notePrivate">
+      </textarea>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.notePrivate">For your eyes only</div>
+  </div>
+</div>

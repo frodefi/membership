@@ -16,20 +16,26 @@
       <li ng-class="{active: ('user.roles' | routeSegmentEqualsTo)}">
         <a href="#{{ 'user.roles' | routeSegmentUrl }}">Roles</a>
       </li>
-      <li ng-class="{active: ('user.comment' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.comment' | routeSegmentUrl }}">Comment</a>
+      <li ng-class="{active: ('user.note' | routeSegmentEqualsTo)}">
+        <a href="#{{ 'user.note' | routeSegmentUrl }}">Notes</a>
       </li>
-      <li tmp-ng-show="overview.data.membership[0]" ng-class="{active: ('user.membership' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.membership' | routeSegmentUrl }}">Membership</a>
-      </li>
-      <li tmp-ng-show="overview.data.boat[0]" ng-class="{active: ('user.boat' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.boat' | routeSegmentUrl }}">Boat</a>
+      <li tmp-ng-show="model.data.details.thisUser.boat" ng-class="{active: ('user.boat' | routeSegmentEqualsTo)}">
+        <a href="#{{ 'user.boat' | routeSegmentUrl }}">Berth</a>
       </li>
     </ul>
   </div>
 </div>
-<div class="row top-buffer">
-  <div class="col-sm-12">
-    <div class="anim" app-view-segment="1">To view and edit info, choose grouping above.</div>
+<form class="form-horizontal"
+      role="form"
+      name="model.form"
+      novalidate
+      ng-submit="model.save()">
+  <div ng-include="'user/timestamps.html'"></div>
+  <div class="row top-buffer">
+    <div class="col-sm-12">
+      <div class="anim" app-view-segment="1">To view and edit info, choose grouping above.</div>
+    </div>
   </div>
-</div>
+  <div ng-include="'user/submit-button.html'"></div>
+</form>
+

@@ -1,16 +1,19 @@
 angular.module('backendModule')
   .factory('backendDataService', ['$kinvey', '$q',
     function ($kinvey, $q) {
-      var backendDataService = {};
+      var data = {};
 
-      backendDataService.loadAllUsersPublicData = function () {
+      data.loadAllUsersPublicData = function () {
         var query = new $kinvey.Query();
         query.descending('_kmd.lmt'); // Last modified first
-        var promise = $kinvey.DataStore.find('data',query);
+        if(userId) {
+          query.equalTo('_acl.creator', userId);
+        }
+        var promise = $kinvey.DataStore.find(collectionName,query);
         var deferred = $q.defer();
         promise.then(function (data) {
-          if(data.length > 0) {
-            convertKinveySpecialProperties(data);
+          for (var i = 0; i < data.length; i++) {
+            convertKinveySpecialProperties(data[i]);
           }
           deferred.resolve(data);
         }, function (error) {
@@ -19,7 +22,7 @@ angular.module('backendModule')
         return deferred.promise;
       };
 
-      backendDataService.save = function (collectionName, data) {
+      data.save = function (collectionName, data) {
         console.log("backend:",collectionName, data);
         delete data.createdAt;
         delete data.lastModified;
@@ -35,13 +38,13 @@ angular.module('backendModule')
         return deferred.promise;
       };
 
-      return backendDataService;
+      return data;
 
-      function convertKinveySpecialProperties(data) {
-        console.log("data",data);
-        data.creatorId = data._acl.creator;
-        data.createdAt = new Date(data._kmd.ect);
-        data.lastModified = new Date(data._kmd.lmt);
+      function convertKinveySpecialProperties(model) {
+        model.creatorId = model._acl.creator;
+        model.createdAt = new Date(model._kmd.ect);
+        model.lastModified = new Date(model._kmd.lmt);
+//        return model;
       }
     }
   ]);

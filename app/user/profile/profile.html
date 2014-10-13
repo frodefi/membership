@@ -1,140 +1,138 @@
-<div ng-include="'user/timestamps.html'"></div>
-<form class="form-horizontal" role="form" name="form" novalidate ng-submit="model.save()">
-  <div class="row">
-    <div class="form-group">
-      <label for="fullName" class="col-sm-3 control-label">Full name</label>
+<div class="row">
+  <div class="form-group">
+    <label for="fullName" class="col-sm-3 control-label">Full name</label>
 
-      <div class="col-sm-5">
-        <input type="text"
-               class="form-control"
-               ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
-               id="fullName"
-               name="fullName"
-               placeholder="Your full name"
-               ng-model="model.data.fullName">
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.fullName">Your full name</div>
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.setViewMode(false); model.setShowHelp('fullName')"
+             id="fullName"
+             name="fullName"
+             placeholder="Your full name"
+             ng-model="model.data.details.thisUser.fullName">
     </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.fullName">Your full name</div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Main contact info:</label>
-      <div class="col-sm-9"></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="email" class="col-sm-3 control-label">Email</label>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Main contact info:</label>
 
-      <div class="col-sm-5">
-        <input type="text"
-               class="form-control"
-               ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
-               id="email"
-               name="email"
-               placeholder="Your main email address"
-               ng-model="model.data.email">
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.email">Your main email address</div>
-    </div>
+    <div class="col-sm-9"></div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="phone" class="col-sm-3 control-label">Phone</label>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="email" class="col-sm-3 control-label">Email</label>
 
-      <div class="col-sm-5">
-        <input type="text"
-               class="form-control"
-               ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
-               id="phone"
-               name="phone"
-               placeholder="Enter your phone number"
-               ng-model="model.data.phone">
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.phone">Your phone number</div>
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.setViewMode(false); model.setShowHelp('email')"
+             id="email"
+             name="email"
+             placeholder="Your main email address"
+             ng-model="model.data.details.thisUser.email">
     </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.email">Your main email address</div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="address" class="col-sm-3 control-label">Address</label>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="phone" class="col-sm-3 control-label">Phone</label>
 
-      <div class="col-sm-5">
-        <input type="text"
-               class="form-control"
-               ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
-               id="address"
-               name="address"
-               placeholder="Enter your full postal address"
-               ng-model="model.data.address">
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.address">Your full postal address for sending mail</div>
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.setViewMode(false); model.setShowHelp('phone')"
+             id="phone"
+             name="phone"
+             placeholder="Enter your phone number"
+             ng-model="model.data.details.thisUser.phone">
     </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.phone">Your phone number</div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Optional second contact info:</label>
-      <div class="col-sm-9"></div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="email2" class="col-sm-3 control-label">Email</label>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="address" class="col-sm-3 control-label">Address</label>
 
-      <div class="col-sm-5">
-        <input type="text"
-               class="form-control"
-               ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
-               id="email2"
-               name="email2"
-               placeholder="Enter an optional secondary email address"
-               ng-model="model.data.email2">
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.email2">A secondary email address, like you office
-        email
-      </div>
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.setViewMode(false); model.setShowHelp('address')"
+             id="address"
+             name="address"
+             placeholder="Enter your full postal address"
+             ng-model="model.data.details.thisUser.address">
     </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.address">Your full postal address for sending mail</div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="phone2" class="col-sm-3 control-label">Phone</label>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label class="col-sm-3 control-label">Optional second contact info:</label>
 
-      <div class="col-sm-5">
-        <input type="text"
-               class="form-control"
-               ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
-               id="phone2"
-               name="phone2"
-               placeholder="Enter an optional second phone number"
-               ng-model="model.data.phone2">
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.phone2">An alternative phone number, like office phone
-      </div>
-    </div>
+    <div class="col-sm-9"></div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="address2" class="col-sm-3 control-label">Address</label>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="email2" class="col-sm-3 control-label">Email</label>
 
-      <div class="col-sm-5">
-        <input type="text"
-               class="form-control"
-               ng-class="{'no-border': model.viewMode}"
-               ng-focus="model.viewMode=false"
-               id="address2"
-               name="address2"
-               placeholder="Enter an optional second postal address, like holiday house address"
-               ng-model="model.data.address2">
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.address2">A secondary postal address, like address on
-        Storfosna if your primary address is different
-      </div>
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.setViewMode(false); model.setShowHelp('email2')"
+             id="email2"
+             name="email2"
+             placeholder="Enter an optional secondary email address"
+             ng-model="model.data.details.thisUser.email2">
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.email2">A secondary email address, like you office
+      email
     </div>
   </div>
-  <div ng-include="'user/submit-button.html'"></div>
-</form>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="phone2" class="col-sm-3 control-label">Phone</label>
+
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.setViewMode(false); model.setShowHelp('phone2')"
+             id="phone2"
+             name="phone2"
+             placeholder="Enter an optional second phone number"
+             ng-model="model.data.details.thisUser.phone2">
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.phone2">An alternative phone number, like office phone
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="address2" class="col-sm-3 control-label">Address</label>
+
+    <div class="col-sm-5">
+      <input type="text"
+             class="form-control"
+             ng-class="{'no-border': model.viewMode}"
+             ng-focus="model.setViewMode(false); model.setShowHelp('address2')"
+             id="address2"
+             name="address2"
+             placeholder="Enter an optional second postal address, like holiday house address"
+             ng-model="model.data.details.thisUser.address2">
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.address2">A secondary postal address, like address on
+      Storfosna if your primary address is different
+    </div>
+  </div>
+</div>

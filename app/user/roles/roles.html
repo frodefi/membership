@@ -6,7 +6,7 @@
       <div class="col-sm-5">
         <label>
           <input type="checkbox"
-               ng-focus="model.viewMode=false; model.setShowHelp('member')"
+               ng-focus="model.setViewMode(false); model.setShowHelp('member')"
                id="member"
                name="member"
                ng-model="model.data.member">
@@ -21,7 +21,7 @@
       <div class="col-sm-5">
         <label>
           <input type="checkbox"
-                 ng-focus="model.viewMode=false; model.setShowHelp('renter')"
+                 ng-focus="model.setViewMode(false); model.setShowHelp('renter')"
                  id="renter"
                  name="renter"
                  ng-model="model.data.renter">
@@ -36,7 +36,7 @@
       <div class="col-sm-5">
         <label>
           <input type="checkbox"
-                 ng-focus="model.viewMode=false; model.setShowHelp('supporter')"
+                 ng-focus="model.setViewMode(false); model.setShowHelp('supporter')"
                  id="supporter"
                  name="supporter"
                  ng-model="model.data.supporter">
@@ -51,7 +51,7 @@
       <div class="col-sm-5">
         <label>
           <input type="checkbox"
-                 ng-focus="model.viewMode=false; model.setShowHelp('houseCommittee')"
+                 ng-focus="model.setViewMode(false); model.setShowHelp('houseCommittee')"
                  id="houseCommittee"
                  name="houseCommittee"
                  ng-model="model.data.houseCommittee">
@@ -66,7 +66,7 @@
       <div class="col-sm-5">
         <label>
           <input type="checkbox"
-                 ng-focus="model.viewMode=false; model.setShowHelp('helper')"
+                 ng-focus="model.setViewMode(false); model.setShowHelp('helper')"
                  id="helper"
                  name="helper"
                  ng-model="model.data.helper">
@@ -75,5 +75,4 @@
       <div class="col-sm-4 help-block" ng-show="model.showHelp.helper">Volunteer work of some kind...</div>
     </div>
   </div>
-  <div ng-include="'user/submit-button.html'"></div>
 </form>

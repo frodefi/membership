@@ -1,71 +1,45 @@
 angular.module('commonModule', [])
-  .factory('commonService', ['$timeout','$location','$window','dataService','userService',
-    function ($timeout,$location,$window,dataService,userService) {
+  .factory('commonService', ['$timeout', '$location', '$window', 'dataService', 'userService',
+    function ($timeout, $location, $window, dataService, userService) {
       var common = {};
-      var data = dataService;
-      var user = userService;
 
-      common.setScopeAndMore = function (scope, modelName) {
+      common.setScopeAndMore = function (scope) {
         scope.model = {};
-        var modelData = {};
-        if (modelName === "account") {
-          modelData = user.account;
-          modelData.password = "";
-          modelData.confirmPassword = "";
-        } else {
-          data.initCollection(modelName);
-          modelData = data.collections[modelName][0];
-          common.handleServerDataModelUpdate(scope, modelName);
-        }
-        scope.model.data = {};
-        common.setModelData(scope,modelData);
-        scope.model.submitText = "Save changes";
-        scope.model.viewMode = true;
         scope.model.showHelp = {};
-        setShowHelpsFalse();
-
-        scope.model.setShowHelp = function (field) {
-          setShowHelpsFalse();
-          scope.model.showHelp[field] = true;
-        };
-        scope.model.cancel = function () {
-          common.setModelData(scope,scope.model.pristine);
-          setShowHelpsFalse();
-        };
-        scope.model.save = function () {
-          console.log("mn:model.data");
-          data.save(modelName, scope.model.data);
-        };
-        common.preventAccidentalPathChange(scope);
-
-        function setShowHelpsFalse () {
-          angular.forEach(scope.model.data, function(value, key){
-            scope.model.showHelp[key] = false;
-          });
-        }
-      };
-
-      common.setModelData = function (scope, modelData) {
-        angular.copy(modelData,scope.model.data);
-        scope.model.pristine = modelData;
-        if (modelData.hasOwnProperty("status")) {
-          scope.model.statusOptions = data.statusOptions(modelData.status);
-        }
+        scope.model.data = dataService;
+        scope.model.user = userService;
+        scope.model.user.account.password = "";
+        scope.model.user.account.confirmPassword = "";
+        scope.model.user.pristine = scope.model.user.account;
+        scope.model.data.pristine = scope.model.data.details;
         scope.model.unsavedChanges = false;
         scope.model.viewMode = true;
-      };
+        scope.model.submitText = "Save changes";
 
-      common.setStatus = function (model) {
-        if (model && model.hasOwnProperty("status")) {
-          return model.status;
-        } else {
-          return "New";
-        }
+        scope.model.cancel = function () {
+          angular.copy(scope.model.pristine, scope.model.details);
+          scope.model.setShowHelp();
+        };
+
+        scope.model.setShowHelp = function (field) {
+          angular.forEach(scope.model.showHelp, function (value, key) {
+            scope.model.showHelp[key] = false;
+          });
+          if (field) {
+            scope.model.showHelp[field] = true;
+          }
+        };
+
+        scope.model.updateAll = function () {
+          dataService.updateAll();
+          userService.update();
+        };
       };
 
       common.cancelPreventAccidentalPathChange = function (scope) {
-        // todo: Works for current cases by trigging the watch, but maybe change to something better later
-        scope.model.data = scope.model.pristine;
+        // todo: Works for current cases by trigging the watches, but maybe change to something better later
+        scope.model.user.details = scope.model.user.pristine;
+        scope.model.data.details = scope.model.data.pristine;
       };
 
       common.preventAccidentalPathChange = function (scope) {
@@ -80,7 +54,7 @@ angular.module('commonModule', [])
               scope.model.unsavedChanges = false;
             } else if (!scope.model.unsavedChanges) {
               removeListener = scope.$on('$locationChangeStart', function (event, next, current) {
-                if (!confirm(warning)) {
+                if (!confirm(next+" "+warning)) {
                   event.preventDefault();
                 }
               });
@@ -93,12 +67,23 @@ angular.module('commonModule', [])
         }, true);
       };
 
-      common.handleServerDataModelUpdate = function (scope, modelName) {
+      common.handleServerDataModelUpdate = function (scope) {
         scope.$watch(function () {
-          return data.collections[modelName];
+          return dataService.details;
         }, function (newValue, oldValue) {
           if (newValue && !angular.equals(newValue, oldValue)) {
-            common.setModelData(scope,newValue[0]);
+            scope.model.data.details = newValue;
+            scope.model.data.pristine = newValue;
+          }
+        }, true);
+        $scope.$watch(function () {
+          return scope.user.account;
+        }, function (newValue, oldValue) {
+          if (newValue && !angular.equals(newValue, oldValue)) {
+            newValue.password = passwordNotUpdated;
+            newValue.confirmPassword = passwordNotUpdated;
+            scope.model.user.account = newValue;
+            scope.model.user.pristine = newValue;
           }
         }, true);
       };

@@ -1,8 +1,9 @@
 angular.module('alertModule').factory('alertService', ['$timeout',function($timeout) {
-  var alerts = {};
+  var alerts = {
+    list: [],
+    waiting: 0
+  };
   var id = 1;
-
-  alerts.list = [];
 
   alerts.add = function(alert) {
     alert.id = id;
@@ -20,15 +21,26 @@ angular.module('alertModule').factory('alertService', ['$timeout',function($time
   };
 
 //  alerts.add({type: "info", msg:"This is a test alert message...",timeout: 5000});
+  alerts.add({type: "info", msg:"This is a test alert message..."});
 
   alerts.addServerError = function(error) {
     return alerts.add({type: "warning", msg: "Server-related errormessage: " + error.description});
   };
 
+  alert.addWaiting = function () {
+    alerts.waiting++;
+  };
+
+  alert.removeWaiting = function () {
+    alerts.waiting--;
+  };
+
   alerts.close = function(id) {
-    for(var i = 0; i<alerts.list.length; i++) {
-      if (alerts.list[i].id == id) {
-        alerts.list.splice(i, 1);
+    if(id >= 0) {
+      for (var i = 0; i < alerts.list.length; i++) {
+        if (alerts.list[i].id == id) {
+          alerts.list.splice(i, 1);
+        }
       }
     }
   };

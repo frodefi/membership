@@ -29,10 +29,9 @@ angular.module('app.config')
         .when('/user', 'user')
         .when('/user/account', 'user.account')
         .when('/user/profile', 'user.profile')
-        .when('/user/membership', 'user.membership')
         .when('/user/boat', 'user.boat')
         .when('/user/roles', 'user.roles')
-        .when('/user/comment', 'user.comment')
+        .when('/user/note', 'user.note')
         .when('/user/create', 'create')
         .when('/user/login', 'login')
 
@@ -44,23 +43,15 @@ angular.module('app.config')
           controller: 'UserCtrl'})
         .within()
           .segment('account', {
-            templateUrl: 'user/account/account.html',
-            controller: 'AccountCtrl'})
+            templateUrl: 'user/account/account.html'})
           .segment('profile', {
-            templateUrl: 'user/profile/profile.html',
-            controller: 'ProfileCtrl'})
-          .segment('membership', {
-            templateUrl: 'user/membership/membership.html',
-            controller: 'MembershipCtrl'})
-          .segment('boat', {
-            templateUrl: 'user/boat/boat.html',
-            controller: 'BoatCtrl'})
+            templateUrl: 'user/profile/profile.html'})
           .segment('roles', {
-            templateUrl: 'user/roles/roles.html',
-            controller: 'RolesCtrl'})
-          .segment('comment', {
-            templateUrl: 'user/comment/comment.html',
-            controller: 'CommentCtrl'})
+            templateUrl: 'user/roles/roles.html'})
+          .segment('note', {
+            templateUrl: 'user/note/note.html'})
+          .segment('boat', {
+            templateUrl: 'user/boat/boat.html'})
         .up()
         .segment('login', {
           templateUrl: 'user/login/login.html',
