@@ -19,7 +19,7 @@ angular.module('userModule', ['backendModule'])
         angular.extend(user.details,initialUser);
         user.authenticated = true;
         user.initiated = true;
-        dataService.init(user.details._id);
+        dataService.init(user.details.username);
       };
 
       user.register = function (credentials) {
@@ -79,6 +79,11 @@ angular.module('userModule', ['backendModule'])
         var promise = backendUserService.update(newUserData);
         promise.then(
           function (success) {
+            if (newUserData.username !== user.details.username) {
+              dataService.details.usersObject[newUserData.username] = dataService.details.usersObject[user.username];
+              delete dataService.details.usersObject[user.username];
+            }
+            angular.extend(user.details,newUserData);
             alertService.removeWaiting();
           },
           function (error) {

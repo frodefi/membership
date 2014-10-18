@@ -1,17 +1,18 @@
 angular.module('app.controllers')
-  .controller('UserCtrl', ['$scope', '$window', 'userService', 'dataService', '$routeSegment',
+  .controller('UserCtrl', ['$scope', '$window', 'userService', 'dataService','$routeSegment',
     function ($scope, $window, userService, dataService, $routeSegment) {
       var warning = "You have unsaved changes, are you sure you want to leave this page?";
       var passwordNotUpdated = "Passw0rdNotUpdated!";
-      $scope.item = { id: $routeSegment.$routeParams.id };
       $scope.model = {};
       $scope.model.showHelp = {};
       $scope.model.data = dataService;
       $scope.model.user = userService;
+      $scope.model.thisUserUsername = $routeSegment.$routeParams.id;
+      $scope.model.data.details.thisUser = $scope.model.user.details.usersObject[thisUserUsername];
       $scope.model.user.details.password = passwordNotUpdated;
       $scope.model.user.details.confirmPassword = passwordNotUpdated;
       $scope.model.user.pristine = angular.copy($scope.model.user.details);
-      $scope.model.data.pristine = angular.copy($scope.model.data.details.me);
+      $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
       $scope.model.options = {};
       $scope.model.unsavedChanges = false;
       $scope.model.viewMode = true;
@@ -21,12 +22,12 @@ angular.module('app.controllers')
         $scope.model.viewMode = value;
         if (value) {
           angular.copy($scope.model.user.pristine, $scope.model.user.details);
-          angular.copy($scope.model.data.pristine, $scope.model.data.details.me);
+          angular.copy($scope.model.data.pristine, $scope.model.data.details.thisUser);
           $scope.model.setShowHelp();
         } else {
           $scope.model.user.pristine = angular.copy($scope.model.user.details);
-          $scope.model.data.pristine = angular.copy($scope.model.data.details.me);
-          $scope.test = [$scope.model.user.details, $scope.model.data.details.me];
+          $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
+          $scope.test = [$scope.model.user.details, $scope.model.data.details.thisUser];
           // If the user edits the form and then undo this by deleting/changing back the entered data,
           // then Angular is still claiming that a form dirty and not in pristine condition.
           // We improve that by do a manually check and toggle $scope.model.unsavedChanges accordingly.
@@ -34,7 +35,7 @@ angular.module('app.controllers')
           var removeListener = function () {
           };
           $scope.$watch(function () {
-            return [$scope.model.user.details, $scope.model.data.details.me];
+            return [$scope.model.user.details, $scope.model.data.details.thisUser];
           }, function (newValue, oldValue) {
             if (!angular.equals(newValue, oldValue)) {
               if (!changed(newValue[0], $scope.model.user.pristine) && !changed(newValue[1], $scope.model.data.pristine)) {
@@ -58,7 +59,7 @@ angular.module('app.controllers')
       };
 
       $scope.model.updateAll = function () {
-        var userDetails = $scope.model.user.details.me;
+        var userDetails = $scope.model.user.details.thisUser;
         delete userDetails.confirmPassword;
         if (userDetails.password === passwordNotUpdated) {
           delete userDetails.password;
@@ -85,24 +86,24 @@ angular.module('app.controllers')
         });
       };
 
-      $scope.$watch('model.data.details.me.memberTypes.standard', function () {
+      $scope.$watch('model.data.details.thisUser.memberTypes.standard', function () {
         $scope.model.options.standard = setOptions('standard');
       });
 
-      $scope.$watch('model.data.details.me.memberTypes.renter', function () {
+      $scope.$watch('model.data.details.thisUser.memberTypes.renter', function () {
         $scope.model.options.renter = setOptions('renter');
       });
 
-      $scope.$watch('model.data.details.me.memberTypes.helper', function () {
+      $scope.$watch('model.data.details.thisUser.memberTypes.helper', function () {
         $scope.model.options.helper = setOptions('helper');
       });
 
-      $scope.$watch('model.data.details.me.memberTypes.house', function () {
+      $scope.$watch('model.data.details.thisUser.memberTypes.house', function () {
         $scope.model.options.house = setOptions('house');
       });
 
       function setOptions(memberType) {
-        var status = dataService.details.me.public.memberTypes[memberType];
+        var status = dataService.details.thisUser.public.memberTypes[memberType];
         if (status === "pending") {
           return [
             {

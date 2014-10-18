@@ -19,12 +19,18 @@ angular.module('backendModule')
         return deferred.promise;
       };
 
-      backendDataService.save = function (collectionName, data) {
-        console.log("backend:",collectionName, data);
+      backendDataService.save = function (data) {
+        console.log("backend:",data);
         delete data.createdAt;
         delete data.lastModified;
         delete data.creatorId;
-        var promise = $kinvey.DataStore.save(collectionName, data);
+        // todo: set up security on the server (admin can read and write all), that will probably also involve change this code a tiny bit...
+        // todo: set up role of admin that can read/write all data
+        // todo: set up role of board that can read all data
+        var promise = $kinvey.DataStore.save("usersPublic", data,{
+          relations: {limited: "usersLimited"},
+          relations: {admin: "usersAdmin"}
+        });
         var deferred = $q.defer();
         promise.then(function (data) {
           convertKinveySpecialProperties(data);

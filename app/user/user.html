@@ -20,7 +20,7 @@
       <li ng-class="{active: ('user.notes' | routeSegmentEqualsTo)}">
         <a href="#{{ 'user.notes' | routeSegmentUrl }}">Notes</a>
       </li>
-      <li tmp-ng-show="model.data.details.me.boat" ng-class="{active: ('user.boat' | routeSegmentEqualsTo)}">
+      <li tmp-ng-show="model.data.details.thisUser.boat" ng-class="{active: ('user.boat' | routeSegmentEqualsTo)}">
         <a href="#{{ 'user.boat' | routeSegmentUrl }}">Berth</a>
       </li>
     </ul>

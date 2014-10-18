@@ -11,7 +11,7 @@
           id="notePublic"
           name="notePublic"
           placeholder="Enter any additional public information you might have"
-          ng-model="model.data.details.me.public.note">
+          ng-model="model.data.details.thisUser.public.note">
       </textarea>
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.notePublic">Any additional information, it will be visible
@@ -32,7 +32,7 @@
           id="notePrivate"
           name="notePrivate"
           placeholder="Enter any information that is only interesting for the administration"
-          ng-model="model.data.details.me.limited.note.toAdmin">
+          ng-model="model.data.details.thisUser.limited.note.toAdmin">
       </textarea>
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.notePrivate">For you and admin eyes only</div>
@@ -51,7 +51,7 @@
           id="noteAdmin"
           name="noteAdmin"
           placeholder="Notes from the administration will appear here"
-          ng-model="model.data.details.me.limited.note.fromAdmin">
+          ng-model="model.data.details.thisUser.limited.note.fromAdmin">
       </textarea>
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.noteAdmin">Note from the administration

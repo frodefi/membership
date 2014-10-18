@@ -2,46 +2,40 @@ angular.module('dataModule')
   .factory('dataService', ['backendDataService', 'alertService',
     function (backendDataService, alertService) {
       var data = {
-        details: {}
+        details: {
+          usersArray: {},
+          usersObject: {}
+        }
       };
 
-      initProperties();
+      var newUserInitData = {
+        memberTypes: {
+          standard: "not active",
+          renter: "not active",
+          helper: "not active",
+          house: "not active"
+        },
+        boat: {
+          admin: "self"
+        },
+        limited: {}
+      };
 
-      function initProperties() {
-        data.details = {
-          me: {
-            public: {
-              memberTypes: {
-                standard: "not active",
-                renter: "not active",
-                helper: "not active",
-                house: "not active"
-              },
-              boat: {
-                admin: "self"
-              }
-            },
-            limited: {},
-            admin: {}
-          },
-          allUsers: {}
-        };
-      }
-
-      data.init = function (userId) {
-        initProperties();
+      data.init = function (username) {
         data.waiting = true;
         var promise = backendDataService.loadAllUsersData();
         promise.then(
           function (success) {
             if (success.length > 0) {
-              angular.copy(success, data.details.allUsers);
-              for (var i = 0; i < data.details.allUsers.length; i++) {
-                if (data.details.allUsers[i]._id === userId) {
-                  angular.copy(data.details.allUsers[i], data.details.me);
-                  data.details.allUsers.splice(i, 1);
-                }
+              angular.copy(success, data.details.usersArray);
+              for (var i = 0; i < data.details.usersArray.length; i++) {
+                data.details.usersObject[data.details.usersArray[i].account.username] = data.details.usersArray[i];
               }
+            }
+            if (!data.details.usersObject.hasOwnProperty(username)) {
+              data.details.usersArray.unshift(newUserInitData);
+              data.details.usersObject[username] = newUserInitData;
+              data.save(username);
             }
             alertService.removeWaiting();
           },
@@ -52,9 +46,9 @@ angular.module('dataModule')
         );
       };
 
-      data.save = function (collectionName) {
+      data.save = function (username) {
         data.waiting = true;
-        var promise = backendDataService.save(collectionName, data.details[collectionName]);
+        var promise = backendDataService.save(data.details.usersObject[username]);
         promise.then(
           function (success) {
             alertService.removeWaiting();
@@ -67,7 +61,7 @@ angular.module('dataModule')
       };
 
       data.logout = function () {
-        initProperties();
+        // todo: should probably do some deletion of data here...
       };
 
       return data;

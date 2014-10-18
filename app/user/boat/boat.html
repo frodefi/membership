@@ -16,20 +16,20 @@
                  value="self"
                  name="admin"
                  ng-focus="model.setViewMode(false); model.setShowHelp('admin')"
-                 ng-model="model.data.details.me.public.boat.admin"> Yourself
+                 ng-model="model.data.details.thisUser.public.boat.admin"> Yourself
         </label>
         <label class="radio-inline">
           <input type="radio"
                  value="other"
                  ng-focus="model.setViewMode(false); model.setShowHelp('admin')"
                  name="admin"
-                 ng-model="model.data.details.me.public.boat.admin"> Another person (must be a registered user)
+                 ng-model="model.data.details.thisUser.public.boat.admin"> Another person (must be a registered user)
         </label>
       </div>
       <div class="col-sm-4 help-block" ng-show="model.showHelp.admin">Who is administering the membership?</div>
     </div>
   </div>
-  <div class="form-group" ng-show="model.data.details.me.public.boat.admin === 'other'">
+  <div class="form-group" ng-show="model.data.details.thisUser.public.boat.admin === 'other'">
     <label for="search" class="col-sm-3 control-label">Find user</label>
 
     <div class="col-sm-5">
@@ -66,7 +66,7 @@
              id="name"
              name="name"
              placeholder="Enter the name of the boat"
-             ng-model="model.data.details.me.boat.name">
+             ng-model="model.data.details.thisUser.boat.name">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.name">Name of boat</div>
   </div>
@@ -83,7 +83,7 @@
              id="reg"
              name="reg"
              placeholder="Enter the the boat registration number"
-             ng-model="model.data.details.me.boat.reg">
+             ng-model="model.data.details.thisUser.boat.reg">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.reg">The boats official registration number</div>
   </div>
@@ -100,7 +100,7 @@
              id="type"
              name="type"
              placeholder="Enter the boat type"
-             ng-model="model.data.details.me.boat.type">
+             ng-model="model.data.details.thisUser.boat.type">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.type">Boat type, like "Hansavik 23"</div>
   </div>
@@ -117,7 +117,7 @@
              id="width"
              name="width"
              placeholder="Enter the width of the boat"
-             ng-model="model.data.details.me.boat.width">
+             ng-model="model.data.details.thisUser.boat.width">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.width">Boat width in meter, like "2,3"</div>
   </div>
@@ -134,7 +134,7 @@
              id="length"
              name="length"
              placeholder="Enter the length of the boat"
-             ng-model="model.data.details.me.boat.length">
+             ng-model="model.data.details.thisUser.boat.length">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.length">Boat length</div>
   </div>
