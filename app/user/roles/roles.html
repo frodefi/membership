@@ -1,78 +1,74 @@
-<div ng-include="'user/timestamps.html'"></div>
 <form class="form-horizontal" role="form" name="form" novalidate ng-submit="model.save()">
   <div class="row">
     <div class="form-group">
-      <label for="member" class="col-sm-3 control-label">Member</label>
+      <label for="standard" class="col-sm-3 control-label"><span translate>Standard member</span></label>
+
       <div class="col-sm-5">
-        <label>
-          <input type="checkbox"
-               ng-focus="model.setViewMode(false); model.setShowHelp('member')"
-               id="member"
-               name="member"
-               ng-model="model.data.member">
-        </label>
+        <div ng-class="{'custom-select': model.viewMode}">
+          <select class="form-control"
+                  ng-focus="model.viewMode=false; model.setShowHelp('standard')"
+                  id="standard"
+                  name="standard"
+                  ng-options="status.name as status.text | translate for status in model.options.standard"
+                  ng-model="model.data.details.me.public.memberTypes.standard">
+          </select>
+        </div>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.member">Pending admin approval</div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.standard"><span translate>Member type help text</span></div>
     </div>
   </div>
   <div class="row">
     <div class="form-group">
-      <label for="renter" class="col-sm-3 control-label">Renter</label>
+      <label for="renter" class="col-sm-3 control-label"><span translate>Renter</span></label>
+
       <div class="col-sm-5">
-        <label>
-          <input type="checkbox"
-                 ng-focus="model.setViewMode(false); model.setShowHelp('renter')"
-                 id="renter"
-                 name="renter"
-                 ng-model="model.data.renter">
-        </label>
+        <div ng-class="{'custom-select': model.viewMode}">
+          <select class="form-control"
+                  ng-focus="model.viewMode=false; model.setShowHelp('renter')"
+                  id="renter"
+                  name="renter"
+                  ng-options="status.name as status.text | translate for status in model.options.renter"
+                  ng-model="model.data.details.me.public.memberTypes.renter">
+          </select>
+        </div>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.renter">Pending admin approval</div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.renter"><span translate>Member type help text</span></div>
     </div>
   </div>
   <div class="row">
     <div class="form-group">
-      <label for="supporter" class="col-sm-3 control-label">Supporting member</label>
+      <label for="helper" class="col-sm-3 control-label"><span translate>Helper</span></label>
+
       <div class="col-sm-5">
-        <label>
-          <input type="checkbox"
-                 ng-focus="model.setViewMode(false); model.setShowHelp('supporter')"
-                 id="supporter"
-                 name="supporter"
-                 ng-model="model.data.supporter">
-        </label>
+        <div ng-class="{'custom-select': model.viewMode}">
+          <select class="form-control"
+                  ng-focus="model.viewMode=false; model.setShowHelp('helper')"
+                  id="helper"
+                  name="helper"
+                  ng-options="status.name as status.text | translate for status in model.options.helper"
+                  ng-model="model.data.details.me.public.memberTypes.helper">
+          </select>
+        </div>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.supporter">Since you are so kind :)</div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.helper"><span translate>Member type help text</span></div>
     </div>
   </div>
   <div class="row">
     <div class="form-group">
-      <label for="houseCommittee" class="col-sm-3 control-label">House Committee</label>
+      <label for="house" class="col-sm-3 control-label"><span translate>House</span></label>
+
       <div class="col-sm-5">
-        <label>
-          <input type="checkbox"
-                 ng-focus="model.setViewMode(false); model.setShowHelp('houseCommittee')"
-                 id="houseCommittee"
-                 name="houseCommittee"
-                 ng-model="model.data.houseCommittee">
-        </label>
+        <div ng-class="{'custom-select': model.viewMode}">
+          <select class="form-control"
+                  ng-focus="model.viewMode=false; model.setShowHelp('house')"
+                  id="house"
+                  name="house"
+                  ng-options="status.name as status.text | translate for status in model.options.house"
+                  ng-model="model.data.details.me.public.memberTypes.house">
+          </select>
+        </div>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.houseCommittee">Volunteer work of some kind...</div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="helper" class="col-sm-3 control-label">Helper</label>
-      <div class="col-sm-5">
-        <label>
-          <input type="checkbox"
-                 ng-focus="model.setViewMode(false); model.setShowHelp('helper')"
-                 id="helper"
-                 name="helper"
-                 ng-model="model.data.helper">
-        </label>
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.helper">Volunteer work of some kind...</div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.house"><span translate>Member type help text</span></div>
     </div>
   </div>
 </form>

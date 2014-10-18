@@ -27,12 +27,14 @@ angular.module('alertModule').factory('alertService', ['$timeout',function($time
     return alerts.add({type: "warning", msg: "Server-related errormessage: " + error.description});
   };
 
-  alert.addWaiting = function () {
+  alerts.addWaiting = function () {
     alerts.waiting++;
   };
 
-  alert.removeWaiting = function () {
-    alerts.waiting--;
+  alerts.removeWaiting = function () {
+    if (alerts.waiting > 0) {
+      alerts.waiting--;
+    }
   };
 
   alerts.close = function(id) {

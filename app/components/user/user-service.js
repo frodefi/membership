@@ -16,9 +16,7 @@ angular.module('userModule', ['backendModule'])
 
       user.init = function (initialUser) {
         initProperties();
-        console.log("iu",initialUser,user.details);
         angular.extend(user.details,initialUser);
-        console.log("iu",user.details);
         user.authenticated = true;
         user.initiated = true;
         dataService.init(user.details._id);
@@ -55,7 +53,7 @@ angular.module('userModule', ['backendModule'])
             msg: "You are now logged in. Please remember to complete your profile, it is mandatory for completing a project.",
             timeout: 5000
           });
-          $location.path('user');
+          $location.path('user/' + user.details.username);
         }, function (error) {
           alertService.removeWaiting();
           alertService.addServerError(error);
@@ -76,7 +74,7 @@ angular.module('userModule', ['backendModule'])
         );
       };
 
-      user.update = function (newUserData) {
+      user.save = function (newUserData) {
         alertService.addWaiting();
         var promise = backendUserService.update(newUserData);
         promise.then(

@@ -14,7 +14,9 @@
     "textAngular": "1.2.x",
     "angular-bootstrap": "0.x",
     "font-awesome": "4.x",
-    "rangy": "1.2.x"
+    "rangy": "1.2.x",
+    "angular-translate": "~2.4.1",
+    "angular-translate-loader-static-files": "~2.4.1"
   },
   "devDependencies": {},
   "resolutions": {

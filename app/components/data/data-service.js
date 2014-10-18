@@ -9,41 +9,47 @@ angular.module('dataModule')
 
       function initProperties() {
         data.details = {
-          thisUser: {},
-          allUsers: {},
-          commentAdmin: {},
-          commentPrivate: {}
+          me: {
+            public: {
+              memberTypes: {
+                standard: "not active",
+                renter: "not active",
+                helper: "not active",
+                house: "not active"
+              },
+              boat: {
+                admin: "self"
+              }
+            },
+            limited: {},
+            admin: {}
+          },
+          allUsers: {}
         };
       }
 
       data.init = function (userId) {
         initProperties();
         data.waiting = true;
-        var promise = backendDataService.loadAllUsersPublicData();
+        var promise = backendDataService.loadAllUsersData();
         promise.then(
           function (success) {
             if (success.length > 0) {
               angular.copy(success, data.details.allUsers);
               for (var i = 0; i < data.details.allUsers.length; i++) {
                 if (data.details.allUsers[i]._id === userId) {
-                  angular.copy(data.details.allUsers[i], data.details.thisUser);
+                  angular.copy(data.details.allUsers[i], data.details.me);
                   data.details.allUsers.splice(i, 1);
                 }
               }
-              alertService.removeWaiting();
             }
+            alertService.removeWaiting();
           },
           function (error) {
             alertService.removeWaiting();
             console.log("data-init-error: ", error);
           }
         );
-      };
-
-      data.saveAll = function () {
-        data.save('thisUser');
-        data.save('commentAdmin');
-        data.save('commentPrivate');
       };
 
       data.save = function (collectionName) {

@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="form-group">
+    <label for="notePublic" class="col-sm-3 control-label">Note to public</label>
+
+    <div class="col-sm-5">
+      <textarea
+          rows="4"
+          class="form-control"
+          ng-class="{'no-border': model.viewMode}"
+          ng-focus="model.setViewMode(false); model.setShowHelp('notePublic')"
+          id="notePublic"
+          name="notePublic"
+          placeholder="Enter any additional public information you might have"
+          ng-model="model.data.details.me.public.note">
+      </textarea>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.notePublic">Any additional information, it will be visible
+      for all registered users.
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="notePrivate" class="col-sm-3 control-label">Note to administration</label>
+
+    <div class="col-sm-5">
+      <textarea
+          rows="4"
+          class="form-control"
+          ng-class="{'no-border': model.viewMode}"
+          ng-focus="model.setViewMode(false); model.setShowHelp('notePrivate')"
+          id="notePrivate"
+          name="notePrivate"
+          placeholder="Enter any information that is only interesting for the administration"
+          ng-model="model.data.details.me.limited.note.toAdmin">
+      </textarea>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.notePrivate">For you and admin eyes only</div>
+  </div>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="noteAdmin" class="col-sm-3 control-label">Note from administration</label>
+
+    <div class="col-sm-5">
+      <textarea
+          rows="4"
+          class="form-control"
+          ng-class="{'no-border': model.viewMode}"
+          ng-focus="model.setViewMode(false); model.setShowHelp('noteAdmin')"
+          id="noteAdmin"
+          name="noteAdmin"
+          placeholder="Notes from the administration will appear here"
+          ng-model="model.data.details.me.limited.note.fromAdmin">
+      </textarea>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.noteAdmin">Note from the administration
+    </div>
+  </div>
+</div>

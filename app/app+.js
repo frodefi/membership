@@ -7,5 +7,5 @@ angular.module('app', ['app.config','app.controllers','userModule','dataModule',
 
 //angular.module('app.config',[]);
 angular.module('app.controllers',['ngAnimate']);
-angular.module('app.config',['ngAnimate','backendModule','userModule','ngRoute','route-segment']);
+angular.module('app.config',['ngAnimate','backendModule','userModule','ngRoute','route-segment','pascalprecht.translate']);
 //angular.module('app.controllers',['userModule','alertModule']);
