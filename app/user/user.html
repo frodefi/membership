@@ -10,7 +10,7 @@
     <ul class="nav nav-pills">
       <li ng-show="model.thisUserUsername === model.user.details.username"
           ng-class="{active: ('user.account' | routeSegmentEqualsTo)}">
-        <a href="#/user/{{model.user.details.username}}/account'">Account</a>
+        <a href="#/user/{{model.user.details.username}}/account">Account</a>
       </li>
       <li ng-class="{active: ('user.profile' | routeSegmentEqualsTo)}">
         <a href="#/user/{{model.user.details.username}}/profile">Profile</a>
