@@ -6,12 +6,13 @@
       <textarea
           rows="4"
           class="form-control"
+          ng-disabled="model.thisUserUsername !== model.user.details.username"
           ng-class="{'no-border': model.viewMode}"
           ng-focus="model.setViewMode(false); model.setShowHelp('notePublic')"
           id="notePublic"
           name="notePublic"
           placeholder="Enter any additional public information you might have"
-          ng-model="model.data.details.thisUser.public.note">
+          ng-model="model.data.details.thisUser.publicNote">
       </textarea>
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.notePublic">Any additional information, it will be visible
@@ -19,7 +20,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-show="model.thisUserUsername === model.user.details.username">
   <div class="form-group">
     <label for="notePrivate" class="col-sm-3 control-label">Note to administration</label>
 
@@ -27,6 +28,7 @@
       <textarea
           rows="4"
           class="form-control"
+          ng-disabled="model.thisUserUsername !== model.user.details.username"
           ng-class="{'no-border': model.viewMode}"
           ng-focus="model.setViewMode(false); model.setShowHelp('notePrivate')"
           id="notePrivate"
@@ -38,7 +40,7 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.notePrivate">For you and admin eyes only</div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-show="model.thisUserUsername === model.user.details.username">
   <div class="form-group">
     <label for="noteAdmin" class="col-sm-3 control-label">Note from administration</label>
 
@@ -47,6 +49,7 @@
           rows="4"
           class="form-control"
           ng-class="{'no-border': model.viewMode}"
+          ng-disabled="model.thisUserUsername !== 'admin'"
           ng-focus="model.setViewMode(false); model.setShowHelp('noteAdmin')"
           id="noteAdmin"
           name="noteAdmin"

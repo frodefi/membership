@@ -1,54 +1,75 @@
 angular.module('dataModule')
   .factory('dataService', ['backendDataService', 'alertService',
     function (backendDataService, alertService) {
-      var data = {
+      var dataService = {
         details: {
-          usersArray: {},
+          usersArray: [],
           usersObject: {}
         }
       };
 
       var newUserInitData = {
-        memberTypes: {
+        profile: {
+          username: "",
+          fullName: "",
+          email: "",
+          phone: "",
+          address: "",
+          email2: "",
+          phone2: "",
+          address2: ""
+        },
+        memberships: {
           standard: "not active",
           renter: "not active",
           helper: "not active",
           house: "not active"
         },
         boat: {
-          admin: "self"
+          admin: "self",
+          name: "",
+          width: "",
+          length: "",
+          berth: ""
         },
+        publicNote: "",
         limited: {}
       };
 
-      data.init = function (username) {
-        data.waiting = true;
+      dataService.initThisUserData = function (user) {
+        if (!dataService.details.usersObject[user.username]) {
+          newUserInitData.profile.username = user.username;
+          newUserInitData.profile.email = user.email || "";
+          dataService.details.usersObject[user.username] = newUserInitData;
+        }
+      };
+
+      dataService.init = function (user) {
+        dataService.initThisUserData(user);
+        alertService.addWaiting();
         var promise = backendDataService.loadAllUsersData();
         promise.then(
           function (success) {
+            var thisUserDataExists = false;
             if (success.length > 0) {
-              angular.copy(success, data.details.usersArray);
-              for (var i = 0; i < data.details.usersArray.length; i++) {
-                data.details.usersObject[data.details.usersArray[i].account.username] = data.details.usersArray[i];
+              angular.copy(success, dataService.details.usersArray);
+              for (var i = 0; i < dataService.details.usersArray.length; i++) {
+                dataService.details.usersObject[dataService.details.usersArray[i].profile.username] = dataService.details.usersArray[i];
               }
-            }
-            if (!data.details.usersObject.hasOwnProperty(username)) {
-              data.details.usersArray.unshift(newUserInitData);
-              data.details.usersObject[username] = newUserInitData;
-              data.save(username);
             }
             alertService.removeWaiting();
           },
           function (error) {
             alertService.removeWaiting();
-            console.log("data-init-error: ", error);
+            alertService.addServerError(error);
           }
-        );
+        )
+        ;
       };
 
-      data.save = function (username) {
-        data.waiting = true;
-        var promise = backendDataService.save(data.details.usersObject[username]);
+      dataService.save = function (username) {
+        alertService.addWaiting();
+        var promise = backendDataService.save(dataService.details.usersObject[username]);
         promise.then(
           function (success) {
             alertService.removeWaiting();
@@ -60,10 +81,11 @@ angular.module('dataModule')
         );
       };
 
-      data.logout = function () {
+      dataService.logout = function () {
         // todo: should probably do some deletion of data here...
       };
 
-      return data;
+      return dataService;
     }
-  ]);
+  ])
+;

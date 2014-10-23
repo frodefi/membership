@@ -1,3 +1,39 @@
-<h3>Our fancy website</h3>
-<p ng-show="auth.user">Hello! You are logged in.</p>
-<p ng-hide="auth.user">Logged in users can do more!</p>
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Our fancy website</h3>
+
+    <div ng-hide="model.user.authenticated">Logged in users can do more!</div>
+
+    <div ng-show="model.user.authenticated">
+      <p>You can below browse other users, or you can <a href="#/user/{{model.user.details.username}}">edit your own
+        info</a>.
+      </p>
+
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <label for="query">Search</label>
+          <input type="text" ng-model="model.query" class="form-control" id="query" placeholder="Enter search text">
+        </div>
+      </form>
+      <br>
+      <table class="table">
+        <tr>
+          <th><a href="" ng-click="model.sortField ='name'; model.reverse = !model.reverse">Name</a></th>
+          <th>Address</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th><a href="" ng-click="model.sortField = 'population'; model.reverse = !model.reverse">Last modified</a>
+          </th>
+        </tr>
+        <tr ng-repeat="user in model.data.details.usersArray track by user.profile.username | filter:model.query | orderBy:model.sortField:model.reverse">
+          <td><a href="#/user/{{user.profile.username}}">{{user.profile.fullName}}</a></td>
+          <td><a href="#/user/{{user.profile.username}}">{{user.profile.address}}</a></td>
+          <td><a href="#/user/{{user.profile.username}}">{{user.profile.email}}</a></td>
+          <td><a href="#/user/{{user.profile.username}}">{{user.profile.phone}}</a></td>
+          <td><a href="#/user/{{user.profile.username}}">{{user.lastModified}}</a></td>
+        </tr>
+      </table>
+      D:{{}}:
+    </div>
+  </div>
+</div>

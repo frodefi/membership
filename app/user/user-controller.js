@@ -5,10 +5,11 @@ angular.module('app.controllers')
       var passwordNotUpdated = "Passw0rdNotUpdated!";
       $scope.model = {};
       $scope.model.showHelp = {};
-      $scope.model.data = dataService;
+      $scope.model.thisUserUsername = $routeSegment.$routeParams.username;
+      dataService.initThisUserData({username: $scope.model.thisUserUsername});
       $scope.model.user = userService;
-      $scope.model.thisUserUsername = $routeSegment.$routeParams.id;
-      $scope.model.data.details.thisUser = $scope.model.user.details.usersObject[thisUserUsername];
+      $scope.model.data = dataService;
+      $scope.model.data.details.thisUser = $scope.model.data.details.usersObject[$scope.model.thisUserUsername];
       $scope.model.user.details.password = passwordNotUpdated;
       $scope.model.user.details.confirmPassword = passwordNotUpdated;
       $scope.model.user.pristine = angular.copy($scope.model.user.details);
@@ -18,16 +19,42 @@ angular.module('app.controllers')
       $scope.model.viewMode = true;
       $scope.model.submitText = "Save changes";
 
+      $scope.model.hideFormElementIfEmpty = function (fields) {
+        if ($scope.model.thisUserUsername === $scope.model.user.details.username ||
+          $scope.model.thisUserUsername === "admin") {
+          return false; // We do not hide any for elements from the owner of the data or admin
+        }
+        var isEmpty = true;
+        if (!angular.isArray(fields)) {
+          fields = [fields];
+        }
+        angular.forEach(fields, function (value) {
+          values = value.split(".");
+          if ($scope.model.data.details.thisUser[value] || $scope.model.data.details.thisUser[values[0]][values[1]]) {
+            isEmpty = false;
+          }
+        });
+        return isEmpty;
+      };
+
+      $scope.model.setShowHelp = function (field) {
+        angular.forEach($scope.model.showHelp, function (value, key) {
+          $scope.model.showHelp[key] = false;
+        });
+        if (field) {
+          $scope.model.showHelp[field] = true;
+        }
+      };
+
       $scope.model.setViewMode = function (value) {
         $scope.model.viewMode = value;
         if (value) {
-          angular.copy($scope.model.user.pristine, $scope.model.user.details);
-          angular.copy($scope.model.data.pristine, $scope.model.data.details.thisUser);
+          $scope.model.user.details = angular.extend($scope.model.user.pristine);
+          $scope.model.data.details.thisUser = angular.extend($scope.model.data.pristine);
           $scope.model.setShowHelp();
         } else {
           $scope.model.user.pristine = angular.copy($scope.model.user.details);
           $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
-          $scope.test = [$scope.model.user.details, $scope.model.data.details.thisUser];
           // If the user edits the form and then undo this by deleting/changing back the entered data,
           // then Angular is still claiming that a form dirty and not in pristine condition.
           // We improve that by do a manually check and toggle $scope.model.unsavedChanges accordingly.
@@ -59,23 +86,19 @@ angular.module('app.controllers')
       };
 
       $scope.model.updateAll = function () {
-        var userDetails = $scope.model.user.details.thisUser;
-        delete userDetails.confirmPassword;
-        if (userDetails.password === passwordNotUpdated) {
-          delete userDetails.password;
+        if ($scope.model.thisUserUsername === $scope.model.user.details.username) {
+          var userDetails = angular.copy($scope.model.user.details);
+          delete userDetails.confirmPassword;
+          if (userDetails.password === passwordNotUpdated) {
+            delete userDetails.password;
+          }
+          // Todo: For any changes of any account-fields (userService): Add current password verification
+          userService.save(userDetails);
+          $scope.model.user.pristine = angular.copy($scope.model.user.details);
         }
-        // Todo: For any changes of any account-fields (userService): Add current password verification
-        userService.save(userDetails);
-        dataService.save();
-      };
-
-      $scope.model.setShowHelp = function (field) {
-        angular.forEach($scope.model.showHelp, function (value, key) {
-          $scope.model.showHelp[key] = false;
-        });
-        if (field) {
-          $scope.model.showHelp[field] = true;
-        }
+        dataService.save($scope.model.thisUserUsername);
+        $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
+        $scope.model.viewMode = true;
       };
 
       $scope.model.resetPasswords = function () {
@@ -86,24 +109,32 @@ angular.module('app.controllers')
         });
       };
 
-      $scope.$watch('model.data.details.thisUser.memberTypes.standard', function () {
+      $scope.$watch(function () {
+        return dataService.details.usersObject;
+      }, function (newValue, oldValue) {
+        if (!angular.equals(newValue,oldValue) && dataService.details.usersObject[$scope.model.thisUserUsername]) {
+          $scope.model.data.details.thisUser = dataService.details.usersObject[$scope.model.thisUserUsername];
+        }
+      },true);
+
+      $scope.$watch('model.data.details.thisUser.memberships.standard', function () {
         $scope.model.options.standard = setOptions('standard');
       });
 
-      $scope.$watch('model.data.details.thisUser.memberTypes.renter', function () {
+      $scope.$watch('model.data.details.thisUser.memberships.renter', function () {
         $scope.model.options.renter = setOptions('renter');
       });
 
-      $scope.$watch('model.data.details.thisUser.memberTypes.helper', function () {
+      $scope.$watch('model.data.details.thisUser.memberships.helper', function () {
         $scope.model.options.helper = setOptions('helper');
       });
 
-      $scope.$watch('model.data.details.thisUser.memberTypes.house', function () {
+      $scope.$watch('model.data.details.thisUser.memberships.house', function () {
         $scope.model.options.house = setOptions('house');
       });
 
-      function setOptions(memberType) {
-        var status = dataService.details.thisUser.public.memberTypes[memberType];
+      function setOptions(membership) {
+        var status = $scope.model.data.details.thisUser.memberships[membership];
         if (status === "pending") {
           return [
             {

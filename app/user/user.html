@@ -8,20 +8,21 @@
 <div class="row">
   <div class="col-sm-12">
     <ul class="nav nav-pills">
-      <li ng-class="{active: ('user.account' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.account' | routeSegmentUrl }}">Account</a>
+      <li ng-show="model.thisUserUsername === model.user.details.username"
+          ng-class="{active: ('user.account' | routeSegmentEqualsTo)}">
+        <a href="#/user/{{model.user.details.username}}/account'">Account</a>
       </li>
       <li ng-class="{active: ('user.profile' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.profile' | routeSegmentUrl }}">Profile</a>
+        <a href="#/user/{{model.user.details.username}}/profile">Profile</a>
       </li>
       <li ng-class="{active: ('user.roles' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.roles' | routeSegmentUrl }}">Roles</a>
+        <a href="#/user/{{model.user.details.username}}/memberships">Memberships</a>
       </li>
       <li ng-class="{active: ('user.notes' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.notes' | routeSegmentUrl }}">Notes</a>
+        <a href="#/user/{{model.user.details.username}}/notes">Notes</a>
       </li>
-      <li tmp-ng-show="model.data.details.thisUser.boat" ng-class="{active: ('user.boat' | routeSegmentEqualsTo)}">
-        <a href="#{{ 'user.boat' | routeSegmentUrl }}">Berth</a>
+      <li ng-class="{active: ('user.boat' | routeSegmentEqualsTo)}">
+        <a href="#/user/{{model.user.details.username}}/boat">Boat</a>
       </li>
     </ul>
   </div>
@@ -30,7 +31,7 @@
       role="form"
       name="model.form"
       novalidate
-      ng-submit="model.save()">
+      ng-submit="model.updateAll()">
   <div ng-include="'user/timestamps.html'"></div>
   <div class="row top-buffer">
     <div class="col-sm-12">

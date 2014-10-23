@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm-1"></div>
-  <div class="col-sm-10"> W:{{alerts.waiting}}:
+  <div class="col-sm-10">
     <div ng-repeat="alert in alerts.list" class="repeat-item">
       <div class="alert alert-success" role="alert">{{alert.msg}}
         <button type="button" class="close" ng-click="alerts.close(alert.id)">

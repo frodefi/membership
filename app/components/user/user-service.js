@@ -1,34 +1,38 @@
 angular.module('userModule', ['backendModule'])
-  .factory('userService', ['backendUserService', 'dataService', 'alertService', '$location',
-    function (backendUserService, dataService, alertService, $location) {
-      var user = {
+  .factory('userService', ['backendUserService', 'alertService', '$location', 'dataService',
+    function (backendUserService, alertService, $location, dataService) {
+      var userService = {
         details: {}
       };
 
       initProperties();
 
       function initProperties() {
-        user.details.username = "";
-        user.details.email = "";
-        user.initiated = false;
-        user.authenticated = false;
+        userService.details.username = "";
+        userService.details.email = "";
+        userService.authenticated = false;
       }
 
-      user.init = function (initialUser) {
-        initProperties();
-        angular.extend(user.details,initialUser);
-        user.authenticated = true;
-        user.initiated = true;
-        dataService.init(user.details.username);
+      userService.init = function (initialUser) {
+        userService.details = angular.extend({}, initialUser);
+        userService.authenticated = true;
+        dataService.init(userService.details);
       };
 
-      user.register = function (credentials) {
+      userService.register = function (credentials) {
         alertService.addWaiting();
         var promise = backendUserService.register(credentials);
         promise.then(
-          function (newUser) {
-            user.init(newUser);
+          function () {
+            userService.init(credentials);
+            dataService.save(credentials.username);
             alertService.removeWaiting();
+            alertService.add({
+              type: "success",
+              msg: "You are now logged in. Please remember to complete your profile.",
+              timeout: 5000
+            });
+            $location.path('user/' + userService.details.username);
           },
           function (error) {
             alertService.removeWaiting();
@@ -38,29 +42,30 @@ angular.module('userModule', ['backendModule'])
         return promise;
       };
 
-      user.exists = function (username) {
+      userService.exists = function (username) {
         return backendUserService.exists(username);
       };
 
-      user.login = function (provider, credentials) {
+      userService.login = function (provider, credentials) {
         alertService.addWaiting();
         var promise = backendUserService.login(provider, credentials);
         promise.then(function (accountData) {
-          user.init(accountData);
+          userService.init(accountData);
           alertService.removeWaiting();
           alertService.add({
             type: "success",
-            msg: "You are now logged in. Please remember to complete your profile, it is mandatory for completing a project.",
+            msg: "You are now logged in. Please remember to complete your profile.",
             timeout: 5000
           });
-          $location.path('user/' + user.details.username);
+          $location.path('user/' + userService.details.username);
         }, function (error) {
           alertService.removeWaiting();
           alertService.addServerError(error);
         });
+        return promise;
       };
 
-      user.logout = function () {
+      userService.logout = function () {
         initProperties();
         dataService.logout();
         var promise = backendUserService.logout();
@@ -74,16 +79,16 @@ angular.module('userModule', ['backendModule'])
         );
       };
 
-      user.save = function (newUserData) {
+      userService.save = function (newUserData) {
         alertService.addWaiting();
         var promise = backendUserService.update(newUserData);
         promise.then(
           function (success) {
-            if (newUserData.username !== user.details.username) {
-              dataService.details.usersObject[newUserData.username] = dataService.details.usersObject[user.username];
-              delete dataService.details.usersObject[user.username];
+            if (newUserData.username !== userService.details.username) {
+              dataService.details.usersObject[newUserData.username] = dataService.details.usersObject[userService.username];
+              delete dataService.details.usersObject[userService.username];
             }
-            angular.extend(user.details,newUserData);
+            angular.extend(userService.details, newUserData);
             alertService.removeWaiting();
           },
           function (error) {
@@ -93,7 +98,7 @@ angular.module('userModule', ['backendModule'])
         );
       };
 
-      return user;
+      return userService;
 
     }
   ])

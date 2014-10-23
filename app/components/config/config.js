@@ -39,7 +39,7 @@ angular.module('app.config')
         .when('/user/:username/account', 'user.account')
         .when('/user/:username/profile', 'user.profile')
         .when('/user/:username/boat', 'user.boat')
-        .when('/user/:username/roles', 'user.roles')
+        .when('/user/:username/memberships', 'user.memberships')
         .when('/user/:username/notes', 'user.notes')
 
         .segment('frontpage', {
@@ -55,8 +55,8 @@ angular.module('app.config')
         .segment('profile', {
           templateUrl: 'user/profile/profile.html',
           'default': true})
-        .segment('roles', {
-          templateUrl: 'user/roles/roles.html'})
+        .segment('memberships', {
+          templateUrl: 'user/memberships/memberships.html'})
         .segment('notes', {
           templateUrl: 'user/notes/notes.html'})
         .segment('boat', {

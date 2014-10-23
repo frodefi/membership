@@ -10,7 +10,7 @@ angular.module('backendModule')
         var deferred = $q.defer();
         promise.then(function (data) {
           for (var i = 0; i < data.length; i++) {
-            convertKinveySpecialProperties(i);
+            data[i] = convertKinveySpecialProperties(data[i]);
           }
           deferred.resolve(data);
         }, function (error) {
@@ -20,7 +20,7 @@ angular.module('backendModule')
       };
 
       backendDataService.save = function (data) {
-        console.log("backend:",data);
+        console.log("backend-save:",data);
         delete data.createdAt;
         delete data.lastModified;
         delete data.creatorId;
@@ -28,12 +28,14 @@ angular.module('backendModule')
         // todo: set up role of admin that can read/write all data
         // todo: set up role of board that can read all data
         var promise = $kinvey.DataStore.save("usersPublic", data,{
-          relations: {limited: "usersLimited"},
-          relations: {admin: "usersAdmin"}
+          relations: {
+            limited: "usersLimited",
+            admin: "usersAdmin"
+          }
         });
         var deferred = $q.defer();
         promise.then(function (data) {
-          convertKinveySpecialProperties(data);
+          data = convertKinveySpecialProperties(data);
           deferred.resolve(data);
         }, function (error) {
           deferred.reject(error);
@@ -43,11 +45,11 @@ angular.module('backendModule')
 
       return backendDataService;
 
-      function convertKinveySpecialProperties(i) {
-        console.log("convertkinvey-data".i,data[i]);
-        data[i].creatorId = data[i]._acl.creator;
-        data[i].createdAt = new Date(data[i]._kmd.ect);
-        data[i].lastModified = new Date(data[i]._kmd.lmt);
+      function convertKinveySpecialProperties(data) {
+        data.creatorId = data._acl.creator;
+        data.createdAt = new Date(data._kmd.ect);
+        data.lastModified = new Date(data._kmd.lmt);
+        return data;
       }
     }
   ]);

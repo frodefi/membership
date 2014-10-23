@@ -1,57 +1,38 @@
 angular.module('backendModule')
   .factory('backendUserService', ['$kinvey','$q',
     function ($kinvey, $q) {
-      var user = {};
-      user.account = {};
-
-      user.init = function () {
+      var backendUserService = {
+        details: {}
       };
 
-      /*
-       user.checkAuthenticated = function() {
-       var activeUser = $kinvey.getActiveUser();
-       if(null === activeUser) {
-       return false;
-       } else {
-       return true;
-       }
-       };
-       */
-
-      user.exists = function (username) {
+      backendUserService.exists = function (username) {
         return promise = $kinvey.User.exists(username);
       };
 
-      user.register = function (credentials) {
+      backendUserService.register = function (credentials) {
         var promise = $kinvey.User.signup(credentials);
         var deferred = $q.defer();
         promise.then(function (userData) {
-          console.log("backend",userData);
-          angular.copy(userData,user.account);
-          delete user.account.password;
-          user.account.createdAt = new Date(userData._kmd.ect);
-          user.account.lastModified = new Date(userData._kmd.lmt);
-          deferred.resolve(user.account);
+          delete backendUserService.details.password;
+          deferred.resolve(backendUserService.details);
         }, function (error) {
           deferred.reject(error);
         });
         return deferred.promise;
       };
 
-      user.sendConfirmationEmail = function (username) {
+      backendUserService.sendConfirmationEmail = function (username) {
         return $kinvey.User.verifyEmail(username);
       };
 
-      user.login = function (provider, credentials) {
+      backendUserService.login = function (provider, credentials) {
         var promise = {};
         if (provider === 'local') {
           promise = $kinvey.User.login(credentials);
           var deferred = $q.defer();
           promise.then(function (userData) {
-            angular.copy(userData,user.account);
-            user.account.createdAt = new Date(userData._kmd.ect);
-            user.account.lastModified = new Date(userData._kmd.lmt);
-            deferred.resolve(user.account);
+            angular.copy(userData,backendUserService.details);
+            deferred.resolve(backendUserService.details);
           }, function (error) {
             deferred.reject(error);
           });
@@ -59,19 +40,19 @@ angular.module('backendModule')
         return deferred.promise;
       };
 
-      user.logout = function () {
+      backendUserService.logout = function () {
         var user = $kinvey.getActiveUser();
         if (null !== user) {
           return $kinvey.User.logout();
         }
-        angular.copy({},user.account);
+        angular.copy({},user.details);
       };
 
-      user.update = function (newUserData) {
+      backendUserService.update = function (newUserData) {
         return promise = $kinvey.User.update(newUserData);
       };
 
-      return user;
+      return backendUserService;
 
     }
   ]);

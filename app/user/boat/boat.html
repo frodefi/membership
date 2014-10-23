@@ -1,66 +1,11 @@
 <div class="row">
   <div class="form-group">
-    <label class="col-sm-3 control-label">General:</label>
-
-    <div class="col-sm-9"></div>
-  </div>
-</div>
-<div class="row">
-  <div class="row">
-    <div class="form-group">
-      <label class="col-sm-3 control-label">Administrator</label>
-
-      <div class="col-sm-5">
-        <label class="radio-inline">
-          <input type="radio"
-                 value="self"
-                 name="admin"
-                 ng-focus="model.setViewMode(false); model.setShowHelp('admin')"
-                 ng-model="model.data.details.thisUser.public.boat.admin"> Yourself
-        </label>
-        <label class="radio-inline">
-          <input type="radio"
-                 value="other"
-                 ng-focus="model.setViewMode(false); model.setShowHelp('admin')"
-                 name="admin"
-                 ng-model="model.data.details.thisUser.public.boat.admin"> Another person (must be a registered user)
-        </label>
-      </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.admin">Who is administering the membership?</div>
-    </div>
-  </div>
-  <div class="form-group" ng-show="model.data.details.thisUser.public.boat.admin === 'other'">
-    <label for="search" class="col-sm-3 control-label">Find user</label>
-
-    <div class="col-sm-5">
-      <input type="text"
-             class="form-control"
-             ng-class="{'no-border': model.viewMode}"
-             ng-focus="model.setViewMode(false); model.setShowHelp('search')"
-             id="search"
-             name="search"
-             placeholder="Start typing a name of a user"
-             ng-model="model.search">
-    </div>
-    <div class="col-sm-4 help-block" ng-show="model.showHelp.search">Select a administrator for your membership by
-      starting to typing the name of an existing user.
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="form-group">
-    <label class="col-sm-3 control-label">Boat details:</label>
-
-    <div class="col-sm-9"></div>
-  </div>
-</div>
-<div class="row">
-  <div class="form-group">
     <label for="name" class="col-sm-3 control-label">Name</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
+             ng-disabled="model.thisUserUsername !== model.user.details.username"
              ng-class="{'no-border': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('name')"
              id="name"
@@ -78,6 +23,7 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
+             ng-disabled="model.thisUserUsername !== model.user.details.username"
              ng-class="{'no-border': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('reg')"
              id="reg"
@@ -95,6 +41,7 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
+             ng-disabled="model.thisUserUsername !== model.user.details.username"
              ng-class="{'no-border': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('type')"
              id="type"
@@ -112,6 +59,7 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
+             ng-disabled="model.thisUserUsername !== model.user.details.username"
              ng-class="{'no-border': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('width')"
              id="width"
@@ -129,6 +77,7 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
+             ng-disabled="model.thisUserUsername !== model.user.details.username"
              ng-class="{'no-border': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('length')"
              id="length"

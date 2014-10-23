@@ -21,7 +21,7 @@ angular.module('alertModule').factory('alertService', ['$timeout',function($time
   };
 
 //  alerts.add({type: "info", msg:"This is a test alert message...",timeout: 5000});
-  alerts.add({type: "info", msg:"This is a test alert message..."});
+//  alerts.add({type: "info", msg:"This is a test alert message..."});
 
   alerts.addServerError = function(error) {
     return alerts.add({type: "warning", msg: "Server-related errormessage: " + error.description});

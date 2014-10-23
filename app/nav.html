@@ -12,11 +12,15 @@
     <div class="navbar-collapse collapse navbar-responsive-collapse" collapse="navCollapsed  && 'in'" ng-click="navCollapsed=true">
       <ul class="nav navbar-nav">
         <li ng-class="{ active: nav.isActive('/')}"><a href="#/">Home</a></li>
+        <li><img ng-show="nav.showWaitingForServer" src="/spinner.gif"></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li ng-class="{ active: nav.isActive('/user')}" ng-show="user.authenticated"><a href="#/user">{{user.details.username}}&nbsp;overview</a></li>
-        <li ng-class="{ active: nav.isActive('/user/login')}" ng-hide="user.authenticated"><a href="#/user/login">Login</a></li>
-        <li ng-class="{ active: nav.isActive('/user/create')}" ng-hide="user.authenticated"><a href="#/user/create">Register</a></li>
+        <li ng-class="{ active: nav.isActive('/user/'+user.details.username)}"
+            ng-show="user.authenticated"><a href="#/user/{{user.details.username}}">{{user.details.username}}&nbsp;overview</a></li>
+        <li ng-class="{ active: nav.isActive('/user/login')}"
+            ng-hide="user.authenticated"><a href="#/user/login">Login</a></li>
+        <li ng-class="{ active: nav.isActive('/user/create')}"
+            ng-hide="user.authenticated"><a href="#/user/create">Register</a></li>
         <li ng-show="user.authenticated"><a href="#/user/logout" ng-click="nav.logout()">Logout</a></li>
       </ul>
     </div>
