@@ -60,20 +60,7 @@ body { padding-top: 50px; }
 
 // --- end social.css ----
 
-// --- username-input-field ---
-.green {
-  color: green;
-}
-// --- end username-input-field ---
-
-// --- various ----
-.top-buffer { margin-top:20px; }
-
-.no-border {
-  border: 0;
-  box-shadow: none;
-}
-
+// --- route change animation - stolen from demo on angular-route-segment.com
 .anim.ng-enter {
   transition: opacity 1s;
   opacity: 0.0;
@@ -84,6 +71,23 @@ body { padding-top: 50px; }
 }
 .anim.ng-leave {
   display: none;
+}
+// --- end route change animation ----
+
+// --- remove Bootstrap looks for disabled form fields ----
+.form-group .no-extras  {
+  border: 0;
+  box-shadow: none;
+  background-color: white;
+  cursor: default;
+}
+// --- end remove Bootstrap looks for disabled form fields ----
+
+// --- various ----
+.top-buffer { margin-top:20px; }
+
+.green {
+  color: green;
 }
 
 .repeat-item.ng-enter,
@@ -102,6 +106,8 @@ body { padding-top: 50px; }
   opacity:1;
   max-height: 100px;
 }
+
+
 
 // --- end various ----
 

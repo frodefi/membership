@@ -1,11 +1,15 @@
-<div class="row">
+<div class="row"
+     ng-show="model.thisUserUsername === model.user.details.username ||
+              model.thisUserUsername === 'admin'">
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-9">
       <div ng-show="model.viewMode">
         <a href="" ng-click="model.setViewMode(false)">Edit</a>
       </div>
       <div ng-hide="model.viewMode">
-        <button type="submit" class="btn btn-default" ng-disabled="!model.unsavedChanges || form.$invalid">{{model.submitText}}</button>
+        <button type="submit" class="btn btn-default" ng-disabled="!model.unsavedChanges || form.$invalid">
+          {{model.submitText}}
+        </button>
         <a href="" ng-click="model.form.$setPristine(); model.setViewMode(true)">Cancel</a>
       </div>
     </div>

@@ -32,8 +32,13 @@ angular.module('dataModule')
           length: "",
           berth: ""
         },
-        publicNote: "",
-        limited: {}
+        note: "",
+        limited: {
+          notes: {
+            toAdmin: "",
+            fromAdmin: ""
+          }
+        }
       };
 
       dataService.initThisUserData = function (user) {
@@ -69,9 +74,11 @@ angular.module('dataModule')
 
       dataService.save = function (username) {
         alertService.addWaiting();
+        console.log("hmmmm",dataService.details.usersObject[username]);
         var promise = backendDataService.save(dataService.details.usersObject[username]);
         promise.then(
           function (success) {
+            angular.extend(dataService.details.usersObject[username],success);
             alertService.removeWaiting();
           },
           function (error) {

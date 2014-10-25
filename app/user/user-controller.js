@@ -19,10 +19,10 @@ angular.module('app.controllers')
       $scope.model.viewMode = true;
       $scope.model.submitText = "Save changes";
 
-      $scope.model.hideFormElementIfEmpty = function (fields) {
+      $scope.model.hideEmpty = function (fields) {
         if ($scope.model.thisUserUsername === $scope.model.user.details.username ||
-          $scope.model.thisUserUsername === "admin") {
-          return false; // We do not hide any for elements from the owner of the data or admin
+          $scope.model.user.details.username === "admin") {
+          return false; // We do not hide any empty from the owner of the data or admin (those who can edit)
         }
         var isEmpty = true;
         if (!angular.isArray(fields)) {
@@ -87,7 +87,8 @@ angular.module('app.controllers')
       };
 
       $scope.model.updateAll = function () {
-        if ($scope.model.thisUserUsername === $scope.model.user.details.username) {
+        if ($scope.model.thisUserUsername === $scope.model.user.details.username &&
+          !angular.equals($scope.model.user.details,$scope.model.user.pristine)) {
           var userDetails = angular.copy($scope.model.user.details);
           delete userDetails.confirmPassword;
           if (userDetails.password === passwordNotUpdated) {
@@ -97,6 +98,7 @@ angular.module('app.controllers')
           userService.save(userDetails);
           $scope.model.user.pristine = angular.copy($scope.model.user.details);
         }
+        console.log("save:",$scope.model.data.details.thisUser.limited.notes,$scope.model.data.details.usersObject[$scope.model.thisUserUsername].limited.notes);
         dataService.save($scope.model.thisUserUsername);
         $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
         $scope.model.viewMode = true;
@@ -176,7 +178,7 @@ angular.module('app.controllers')
               'text': 'Not active'
             },
             {
-              'name': 'Pending',
+              'name': 'pending',
               'text': 'Request approval '
             }
           ];

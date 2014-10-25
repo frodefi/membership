@@ -3,14 +3,26 @@ angular.module('backendModule')
     function ($kinvey, $q) {
       var backendDataService = {};
 
+      var relations = {
+        relations: {
+          limited: "usersLimited",
+          admin: "usersAdmin"
+        }
+      };
+
       backendDataService.loadAllUsersData = function () {
         var query = new $kinvey.Query();
         query.descending('fullName'); // Last modified first
-        var promise = $kinvey.DataStore.find('usersPublic',query);
+        var promise = $kinvey.DataStore.find('usersPublic',query, {
+          relations: {
+            limited: "usersLimited",
+            admin: "usersAdmin"
+          }
+        });
         var deferred = $q.defer();
         promise.then(function (data) {
           for (var i = 0; i < data.length; i++) {
-            data[i] = convertKinveySpecialProperties(data[i]);
+            convertKinveySpecialProperties(data[i]);
           }
           deferred.resolve(data);
         }, function (error) {
@@ -27,16 +39,17 @@ angular.module('backendModule')
         // todo: set up security on the server (admin can read and write all), that will probably also involve change this code a tiny bit...
         // todo: set up role of admin that can read/write all data
         // todo: set up role of board that can read all data
-        var promise = $kinvey.DataStore.save("usersPublic", data,{
+        var promise = $kinvey.DataStore.save("usersPublic", data, {
           relations: {
             limited: "usersLimited",
             admin: "usersAdmin"
           }
         });
         var deferred = $q.defer();
-        promise.then(function (data) {
-          data = convertKinveySpecialProperties(data);
-          deferred.resolve(data);
+        promise.then(function (updateData) {
+          console.log("updateData-returned from save:",updateData);
+          convertKinveySpecialProperties(updateData);
+          deferred.resolve(updateData);
         }, function (error) {
           deferred.reject(error);
         });
@@ -49,7 +62,6 @@ angular.module('backendModule')
         data.creatorId = data._acl.creator;
         data.createdAt = new Date(data._kmd.ect);
         data.lastModified = new Date(data._kmd.lmt);
-        return data;
       }
     }
   ]);
