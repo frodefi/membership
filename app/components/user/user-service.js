@@ -2,21 +2,21 @@ angular.module('userModule', ['backendModule'])
   .factory('userService', ['backendUserService', 'alertService', '$location', 'dataService',
     function (backendUserService, alertService, $location, dataService) {
       var userService = {
-        details: {}
+        account: {}
       };
 
       initProperties();
 
       function initProperties() {
-        userService.details.username = "";
-        userService.details.email = "";
+        userService.account.username = "";
+        userService.account.email = "";
         userService.authenticated = false;
       }
 
       userService.init = function (initialUser) {
-        userService.details = angular.extend({}, initialUser);
+        userService.account = angular.extend({}, initialUser);
         userService.authenticated = true;
-        dataService.init(userService.details);
+        dataService.init(userService.account);
       };
 
       userService.register = function (credentials) {
@@ -32,7 +32,7 @@ angular.module('userModule', ['backendModule'])
               msg: "You are now logged in. Please remember to complete your profile.",
               timeout: 5000
             });
-            $location.path('user/' + userService.details.username);
+            $location.path('user/' + userService.account.username);
           },
           function (error) {
             alertService.removeWaiting();
@@ -57,7 +57,7 @@ angular.module('userModule', ['backendModule'])
             msg: "You are now logged in. Please remember to complete your profile.",
             timeout: 5000
           });
-          $location.path('user/' + userService.details.username);
+          $location.path('user/' + userService.account.username);
         }, function (error) {
           alertService.removeWaiting();
           alertService.addServerError(error);
@@ -84,11 +84,11 @@ angular.module('userModule', ['backendModule'])
         var promise = backendUserService.update(newUserData);
         promise.then(
           function (success) {
-            if (newUserData.username !== userService.details.username) {
-              dataService.details.usersObject[newUserData.username] = dataService.details.usersObject[userService.username];
-              delete dataService.details.usersObject[userService.username];
+            if (newUserData.username !== userService.account.username) {
+              dataService.usersObject[newUserData.username] = dataService.usersObject[userService.username];
+              delete dataService.usersObject[userService.username];
             }
-            angular.extend(userService.details, newUserData);
+            angular.extend(userService.account, newUserData);
             alertService.removeWaiting();
           },
           function (error) {

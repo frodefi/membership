@@ -5,23 +5,22 @@ angular.module('app.controllers')
       var passwordNotUpdated = "Passw0rdNotUpdated!";
       $scope.model = {};
       $scope.model.showHelp = {};
-      $scope.model.thisUserUsername = $routeSegment.$routeParams.username;
-      dataService.initThisUserData({username: $scope.model.thisUserUsername});
-      $scope.model.user = userService;
+      dataService.initThisUserData({username: $routeSegment.$routeParams.username});
+      dataService.thisUserUsername = $routeSegment.$routeParams.username;
       $scope.model.data = dataService;
-      $scope.model.data.details.thisUser = $scope.model.data.details.usersObject[$scope.model.thisUserUsername];
-      $scope.model.user.details.password = passwordNotUpdated;
-      $scope.model.user.details.confirmPassword = passwordNotUpdated;
-      $scope.model.user.pristine = angular.copy($scope.model.user.details);
-      $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
+      $scope.model.user = userService;
+      $scope.model.user.account.password = passwordNotUpdated;
+      $scope.model.user.account.confirmPassword = passwordNotUpdated;
+      $scope.model.user.pristine = angular.copy($scope.model.user.account);
+      $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
       $scope.model.options = {};
       $scope.model.unsavedChanges = false;
       $scope.model.viewMode = true;
       $scope.model.submitText = "Save changes";
 
       $scope.model.hideEmpty = function (fields) {
-        if ($scope.model.thisUserUsername === $scope.model.user.details.username ||
-          $scope.model.user.details.username === "admin") {
+        if ($scope.model.data.thisUserUsername === $scope.model.user.account.username ||
+          $scope.model.user.account.username === "admin") {
           return false; // We do not hide any empty from the owner of the data or admin (those who can edit)
         }
         var isEmpty = true;
@@ -30,7 +29,7 @@ angular.module('app.controllers')
         }
         angular.forEach(fields, function (value) {
           values = value.split(".");
-          if ($scope.model.data.details.thisUser[value] || $scope.model.data.details.thisUser[values[0]][values[1]]) {
+          if ($scope.model.data.thisUser[value] || $scope.model.data.thisUser[values[0]][values[1]]) {
             isEmpty = false;
           }
         });
@@ -49,12 +48,12 @@ angular.module('app.controllers')
       $scope.model.setViewMode = function (value) {
         $scope.model.viewMode = value;
         if (value) {
-          $scope.model.user.details = angular.extend($scope.model.user.pristine);
-          $scope.model.data.details.thisUser = angular.extend($scope.model.data.pristine);
+          $scope.model.user.account = angular.extend($scope.model.user.pristine);
+          $scope.model.data.thisUser = angular.extend($scope.model.data.pristine);
           $scope.model.setShowHelp();
         } else {
-          $scope.model.user.pristine = angular.copy($scope.model.user.details);
-          $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
+          $scope.model.user.pristine = angular.copy($scope.model.user.account);
+          $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
           // If the user edits the form and then undo this by deleting/changing back the entered data,
           // then Angular is still claiming that a form dirty and not in pristine condition.
           // We improve that by do a manually check and toggle $scope.model.unsavedChanges accordingly.
@@ -62,7 +61,7 @@ angular.module('app.controllers')
           var removeListener = function () {
           };
           $scope.$watch(function () {
-            return [$scope.model.user.details, $scope.model.data.details.thisUser];
+            return [$scope.model.user.account, $scope.model.data.thisUser];
           }, function (newValue, oldValue) {
             if (!angular.equals(newValue, oldValue)) {
               if (!changed(newValue[0], $scope.model.user.pristine) && !changed(newValue[1], $scope.model.data.pristine)) {
@@ -87,57 +86,49 @@ angular.module('app.controllers')
       };
 
       $scope.model.updateAll = function () {
-        if ($scope.model.thisUserUsername === $scope.model.user.details.username &&
-          !angular.equals($scope.model.user.details,$scope.model.user.pristine)) {
-          var userDetails = angular.copy($scope.model.user.details);
+        if ($scope.model.data.thisUserUsername === $scope.model.user.account.username &&
+          !angular.equals($scope.model.user.account,$scope.model.user.pristine)) {
+          var userDetails = angular.copy($scope.model.user.account);
           delete userDetails.confirmPassword;
           if (userDetails.password === passwordNotUpdated) {
             delete userDetails.password;
           }
           // Todo: For any changes of any account-fields (userService): Add current password verification
           userService.save(userDetails);
-          $scope.model.user.pristine = angular.copy($scope.model.user.details);
+          $scope.model.user.pristine = angular.copy($scope.model.user.account);
         }
-        console.log("save:",$scope.model.data.details.thisUser.limited.notes,$scope.model.data.details.usersObject[$scope.model.thisUserUsername].limited.notes);
-        dataService.save($scope.model.thisUserUsername);
-        $scope.model.data.pristine = angular.copy($scope.model.data.details.thisUser);
+        console.log("save:",$scope.model.data.thisUser.limited.notes,$scope.model.data.usersObject[$scope.model.data.thisUserUsername].limited.notes);
+        dataService.save($scope.model.data.thisUserUsername);
+        $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
         $scope.model.viewMode = true;
       };
 
       $scope.model.resetPasswords = function () {
         angular.forEach(['password', 'confirmPassword'], function (property) {
-          if ($scope.model.user.details[property] === passwordNotUpdated) {
-            $scope.model.user.details[property] = "";
+          if ($scope.model.user.account[property] === passwordNotUpdated) {
+            $scope.model.user.account[property] = "";
           }
         });
       };
 
-      $scope.$watch(function () {
-        return dataService.details.usersObject;
-      }, function (newValue, oldValue) {
-        if (!angular.equals(newValue,oldValue) && dataService.details.usersObject[$scope.model.thisUserUsername]) {
-          $scope.model.data.details.thisUser = dataService.details.usersObject[$scope.model.thisUserUsername];
-        }
-      },true);
-
-      $scope.$watch('model.data.details.thisUser.memberships.standard', function () {
+      $scope.$watch('model.data.thisUser.memberships.standard', function () {
         $scope.model.options.standard = setOptions('standard');
       });
 
-      $scope.$watch('model.data.details.thisUser.memberships.renter', function () {
+      $scope.$watch('model.data.thisUser.memberships.renter', function () {
         $scope.model.options.renter = setOptions('renter');
       });
 
-      $scope.$watch('model.data.details.thisUser.memberships.helper', function () {
+      $scope.$watch('model.data.thisUser.memberships.helper', function () {
         $scope.model.options.helper = setOptions('helper');
       });
 
-      $scope.$watch('model.data.details.thisUser.memberships.house', function () {
+      $scope.$watch('model.data.thisUser.memberships.house', function () {
         $scope.model.options.house = setOptions('house');
       });
 
       function setOptions(membership) {
-        var status = $scope.model.data.details.thisUser.memberships[membership];
+        var status = $scope.model.data.thisUser.memberships[membership];
         if (status === "pending") {
           return [
             {

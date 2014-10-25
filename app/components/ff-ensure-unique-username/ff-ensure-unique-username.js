@@ -5,13 +5,13 @@ angular.module('ffEnsureUniqueUsernameModule', ['userModule', 'alertModule'])
       directive.require = 'ngModel';
       directive.link = function (scope, element, attrs, ctrl) {
         element.bind('keyup', function (evt) {
-          var username = scope.model.user.details.username;
+          var username = scope.model.user.account.username;
           if (username && username.length > 0) {
             ctrl.$setValidity('promiseReturned', false);
             var promise = userService.exists(username);
             promise.then(
               function (exists) {
-                if (username == userService.details.username) {
+                if (username == userService.account.username) {
                   exists = false; // The user already has this username
                 }
                 ctrl.$setValidity('unique', !exists);

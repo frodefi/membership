@@ -10,7 +10,7 @@ angular.module('app.controllers')
       $scope.model.submitText = "Create user";
 
       $scope.model.create = function () {
-        var credentials = $scope.model.user.details;
+        var credentials = $scope.model.user.account;
         delete credentials.confirmPassword;
         userService.register(credentials);
       };

@@ -5,13 +5,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('name')"
              id="name"
              name="name"
              placeholder="Enter the name of the boat"
-             ng-model="model.data.details.thisUser.boat.name">
+             ng-model="model.data.thisUser.boat.name">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.name">Name of boat</div>
   </div>
@@ -23,13 +23,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('reg')"
              id="reg"
              name="reg"
              placeholder="Enter the the boat registration number"
-             ng-model="model.data.details.thisUser.boat.reg">
+             ng-model="model.data.thisUser.boat.reg">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.reg">The boats official registration number</div>
   </div>
@@ -41,13 +41,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('type')"
              id="type"
              name="type"
              placeholder="Enter the boat type"
-             ng-model="model.data.details.thisUser.boat.type">
+             ng-model="model.data.thisUser.boat.type">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.type">Boat type, like "Hansavik 23"</div>
   </div>
@@ -59,13 +59,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('width')"
              id="width"
              name="width"
              placeholder="Enter the width of the boat"
-             ng-model="model.data.details.thisUser.boat.width">
+             ng-model="model.data.thisUser.boat.width">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.width">Boat width in meter, like "2,3"</div>
   </div>
@@ -77,13 +77,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('length')"
              id="length"
              name="length"
              placeholder="Enter the length of the boat"
-             ng-model="model.data.details.thisUser.boat.length">
+             ng-model="model.data.thisUser.boat.length">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.length">Boat length</div>
   </div>

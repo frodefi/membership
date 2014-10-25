@@ -5,7 +5,7 @@
     <div ng-hide="model.user.authenticated">Logged in users can do more!</div>
 
     <div ng-show="model.user.authenticated">
-      <p>You can below browse other users, or you can <a href="#/user/{{model.user.details.username}}">edit your own
+      <p>You can below browse other users, or you can <a href="#/user/{{model.user.account.username}}">edit your own
         info</a>.
       </p>
 
@@ -25,7 +25,7 @@
           <th><a href="" ng-click="model.sortField = 'population'; model.reverse = !model.reverse">Last modified</a>
           </th>
         </tr>
-        <tr ng-repeat="user in model.data.details.usersArray track by user.profile.username | filter:model.query | orderBy:model.sortField:model.reverse">
+        <tr ng-repeat="user in model.data.usersArray track by user.profile.username | filter:model.query | orderBy:model.sortField:model.reverse">
           <td><a href="#/user/{{user.profile.username}}">{{user.profile.fullName}}</a></td>
           <td><a href="#/user/{{user.profile.username}}">{{user.profile.address}}</a></td>
           <td><a href="#/user/{{user.profile.username}}">{{user.profile.email}}</a></td>

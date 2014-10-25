@@ -8,21 +8,21 @@
 <div class="row">
   <div class="col-sm-12">
     <ul class="nav nav-pills">
-      <li ng-show="model.thisUserUsername === model.user.details.username"
+      <li ng-show="model.data.thisUserUsername === model.user.account.username"
           ng-class="{active: ('user.account' | routeSegmentEqualsTo)}">
-        <a href="#/user/{{model.user.details.username}}/account">Account</a>
+        <a href="#/user/{{model.user.account.username}}/account">Account</a>
       </li>
       <li ng-class="{active: ('user.profile' | routeSegmentEqualsTo)}">
-        <a href="#/user/{{model.thisUserUsername}}/profile">Profile</a>
+        <a href="#/user/{{model.data.thisUserUsername}}/profile">Profile</a>
       </li>
       <li ng-class="{active: ('user.roles' | routeSegmentEqualsTo)}">
-        <a href="#/user/{{model.thisUserUsername}}/memberships">Memberships</a>
+        <a href="#/user/{{model.data.thisUserUsername}}/memberships">Memberships</a>
       </li>
       <li ng-class="{active: ('user.notes' | routeSegmentEqualsTo)}">
-        <a href="#/user/{{model.thisUserUsername}}/notes">Notes</a>
+        <a href="#/user/{{model.data.thisUserUsername}}/notes">Notes</a>
       </li>
       <li ng-class="{active: ('user.boat' | routeSegmentEqualsTo)}">
-        <a href="#/user/{{model.thisUserUsername}}/boat">Boat</a>
+        <a href="#/user/{{model.data.thisUserUsername}}/boat">Boat</a>
       </li>
     </ul>
   </div>

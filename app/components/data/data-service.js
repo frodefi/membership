@@ -2,10 +2,10 @@ angular.module('dataModule')
   .factory('dataService', ['backendDataService', 'alertService',
     function (backendDataService, alertService) {
       var dataService = {
-        details: {
-          usersArray: [],
-          usersObject: {}
-        }
+        thisUserUsername: "",
+        usersArray: [],
+        usersObject: {},
+        thisUser: {}
       };
 
       var newUserInitData = {
@@ -42,10 +42,13 @@ angular.module('dataModule')
       };
 
       dataService.initThisUserData = function (user) {
-        if (!dataService.details.usersObject[user.username]) {
+        if (dataService.usersObject[user.username]) {
+          dataService.thisUser = dataService.usersObject[user.username];
+        } else {
           newUserInitData.profile.username = user.username;
           newUserInitData.profile.email = user.email || "";
-          dataService.details.usersObject[user.username] = newUserInitData;
+          dataService.usersObject[user.username] = newUserInitData;
+          dataService.thisUser = newUserInitData;
         }
       };
 
@@ -57,9 +60,10 @@ angular.module('dataModule')
           function (success) {
             var thisUserDataExists = false;
             if (success.length > 0) {
-              angular.copy(success, dataService.details.usersArray);
-              for (var i = 0; i < dataService.details.usersArray.length; i++) {
-                dataService.details.usersObject[dataService.details.usersArray[i].profile.username] = dataService.details.usersArray[i];
+              angular.copy(success, dataService.usersArray);
+              for (var i = 0; i < dataService.usersArray.length; i++) {
+                dataService.usersObject[dataService.usersArray[i].profile.username] = dataService.usersArray[i];
+                dataService.thisUser = dataService.usersArray[i];
               }
             }
             alertService.removeWaiting();
@@ -74,11 +78,11 @@ angular.module('dataModule')
 
       dataService.save = function (username) {
         alertService.addWaiting();
-        console.log("hmmmm",dataService.details.usersObject[username]);
-        var promise = backendDataService.save(dataService.details.usersObject[username]);
+        console.log("hmmmm",dataService.usersObject[username]);
+        var promise = backendDataService.save(dataService.usersObject[username]);
         promise.then(
           function (success) {
-            angular.extend(dataService.details.usersObject[username],success);
+            angular.extend(dataService.usersObject[username],success);
             alertService.removeWaiting();
           },
           function (error) {

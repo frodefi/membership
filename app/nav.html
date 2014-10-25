@@ -15,8 +15,8 @@
         <li><img ng-show="nav.showWaitingForServer" src="/spinner.gif"></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li ng-class="{ active: nav.isActive('/user/'+user.details.username)}"
-            ng-show="user.authenticated"><a href="#/user/{{user.details.username}}">{{user.details.username}}&nbsp;overview</a></li>
+        <li ng-class="{ active: nav.isActive('/user/'+user.account.username)}"
+            ng-show="user.authenticated"><a href="#/user/{{user.account.username}}">{{user.account.username}}&nbsp;overview</a></li>
         <li ng-class="{ active: nav.isActive('/user/login')}"
             ng-hide="user.authenticated"><a href="#/user/login">Login</a></li>
         <li ng-class="{ active: nav.isActive('/user/create')}"

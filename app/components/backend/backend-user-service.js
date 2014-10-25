@@ -2,7 +2,7 @@ angular.module('backendModule')
   .factory('backendUserService', ['$kinvey','$q',
     function ($kinvey, $q) {
       var backendUserService = {
-        details: {}
+        account: {}
       };
 
       backendUserService.exists = function (username) {
@@ -13,8 +13,8 @@ angular.module('backendModule')
         var promise = $kinvey.User.signup(credentials);
         var deferred = $q.defer();
         promise.then(function (userData) {
-          delete backendUserService.details.password;
-          deferred.resolve(backendUserService.details);
+          delete backendUserService.account.password;
+          deferred.resolve(backendUserService.account);
         }, function (error) {
           deferred.reject(error);
         });
@@ -31,8 +31,8 @@ angular.module('backendModule')
           promise = $kinvey.User.login(credentials);
           var deferred = $q.defer();
           promise.then(function (userData) {
-            angular.copy(userData,backendUserService.details);
-            deferred.resolve(backendUserService.details);
+            angular.copy(userData,backendUserService.account);
+            deferred.resolve(backendUserService.account);
           }, function (error) {
             deferred.reject(error);
           });
@@ -45,7 +45,7 @@ angular.module('backendModule')
         if (null !== user) {
           return $kinvey.User.logout();
         }
-        angular.copy({},user.details);
+        angular.copy({},user.account);
       };
 
       backendUserService.update = function (newUserData) {

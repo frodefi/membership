@@ -1,4 +1,4 @@
-<div class="row" ng-hide="model.thisUserUsername === model.user.details.username">
+<div class="row" ng-hide="model.data.thisUserUsername === model.user.account.username">
   <div class="form-group">
     <label for="username" class="col-sm-3 control-label">Username</label>
 
@@ -15,7 +15,7 @@
              ng-class="{'no-extras': true}"
              id="username"
              name="username"
-             ng-model="model.data.details.thisUser.profile.username">
+             ng-model="model.data.thisUser.profile.username">
     </div>
     <div class="col-sm-4 help-block"></div>
   </div>
@@ -27,13 +27,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('fullName')"
              id="fullName"
              name="fullName"
              placeholder="Your full name"
-             ng-model="model.data.details.thisUser.profile.fullName">
+             ng-model="model.data.thisUser.profile.fullName">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.fullName">Your full name</div>
   </div>
@@ -56,13 +56,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('email')"
              id="email"
              name="email"
              placeholder="Your main email address"
-             ng-model="model.data.details.thisUser.profile.email">
+             ng-model="model.data.thisUser.profile.email">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.email">Main email address. Note: May be different from the account email address</div>
   </div>
@@ -74,13 +74,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('phone')"
              id="phone"
              name="phone"
              placeholder="Enter your phone number"
-             ng-model="model.data.details.thisUser.profile.phone">
+             ng-model="model.data.thisUser.profile.phone">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.phone">Main phone number</div>
   </div>
@@ -92,13 +92,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('address')"
              id="address"
              name="address"
              placeholder="Enter your full postal address"
-             ng-model="model.data.details.thisUser.profile.address">
+             ng-model="model.data.thisUser.profile.address">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.address">Main full postal address for sending mail</div>
   </div>
@@ -117,13 +117,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('email2')"
              id="email2"
              name="email2"
              placeholder="Enter an optional secondary email address"
-             ng-model="model.data.details.thisUser.profile.email2">
+             ng-model="model.data.thisUser.profile.email2">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.email2">Optional email address, like you office
       email
@@ -137,13 +137,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('phone2')"
              id="phone2"
              name="phone2"
              placeholder="Enter an optional second phone number"
-             ng-model="model.data.details.thisUser.profile.phone2">
+             ng-model="model.data.thisUser.profile.phone2">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.phone2">Optional phone number, like office phone
     </div>
@@ -156,13 +156,13 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.thisUserUsername !== model.user.details.username"
+             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('address2')"
              id="address2"
              name="address2"
              placeholder="Enter an optional second postal address, like holiday house address"
-             ng-model="model.data.details.thisUser.profile.address2">
+             ng-model="model.data.thisUser.profile.address2">
     </div>
     <div class="col-sm-4 help-block" ng-show="model.showHelp.address2">Optional postal address, like address on
       Storfosna if your primary address is different

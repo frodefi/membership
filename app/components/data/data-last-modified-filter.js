@@ -5,7 +5,7 @@ angular.module('dataModule')
 
       var filtered = null;
       angular.forEach(models, function (model) {
-        if (!filtered || model.data.details.lastModified > filtered.model.data.details.lastModified) {
+        if (!filtered || model.data.lastModified > filtered.model.data.lastModified) {
           filtered = model;
         }
       });

@@ -13,7 +13,7 @@
              id="username"
              name="username"
              placeholder="Enter your public username"
-             ng-model="model.user.details.username"
+             ng-model="model.user.account.username"
              ng-minlength=2
              ng-maxlength=20
              ff-focus
@@ -27,8 +27,8 @@
         <span ng-show= "form.username.$error.required">Please input a username</span>
         <span ng-show= "form.username.$error.minlength">Your username is required to be at least 2 characters</span>
         <span ng-show= "form.username.$error.maxlength">Your username cannot be longer than 20 characters</span>
-        <span ng-show=" model.user.details.username &&
-                        model.user.details.username !== model.user.pristine.username &&
+        <span ng-show=" model.user.account.username &&
+                        model.user.account.username !== model.user.pristine.username &&
                        !form.username.$error.minlength &&
                        !form.username.$error.promiseReturned &&
                         form.username.$error.unique">That username is taken, please try another</span>
@@ -38,11 +38,11 @@
                      !form.username.$error.promiseReturned &&
                      !form.username.$invalid &&
                      !form.username.$error.unique &&
-                      model.user.details.username != model.user.pristine.username">
+                      model.user.account.username != model.user.pristine.username">
         Username is available :)
       </span>
       <span class="green"
-            ng-show="model.showHelp.username && model.user.details.username && model.user.details.username === model.user.pristine.username">
+            ng-show="model.showHelp.username && model.user.account.username && model.user.account.username === model.user.pristine.username">
         Your current username
       </span>
     </div>
