@@ -17,6 +17,8 @@ angular.module('app.controllers')
       $scope.model.unsavedChanges = false;
       $scope.model.viewMode = true;
       $scope.model.submitText = "Save changes";
+      var removeListener = function () {
+      };
 
       $scope.model.hideEmpty = function (fields) {
         if ($scope.model.data.thisUserUsername === $scope.model.user.account.username ||
@@ -97,10 +99,13 @@ angular.module('app.controllers')
           userService.save(userDetails);
           $scope.model.user.pristine = angular.copy($scope.model.user.account);
         }
-        console.log("save:",$scope.model.data.thisUser.limited.notes,$scope.model.data.usersObject[$scope.model.data.thisUserUsername].limited.notes);
-        dataService.save($scope.model.data.thisUserUsername);
-        $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
+        if (!angular.equals($scope.model.data.thisUser, $scope.model.data.pristine)) {
+          dataService.save($scope.model.data.thisUserUsername);
+          $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
+        }
         $scope.model.viewMode = true;
+        removeListener();
+        $window.onbeforeunload = undefined;
       };
 
       $scope.model.resetPasswords = function () {

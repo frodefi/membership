@@ -78,7 +78,6 @@ angular.module('dataModule')
 
       dataService.save = function (username) {
         alertService.addWaiting();
-        console.log("hmmmm",dataService.usersObject[username]);
         var promise = backendDataService.save(dataService.usersObject[username]);
         promise.then(
           function (success) {

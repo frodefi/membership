@@ -47,6 +47,7 @@ angular.module('userModule', ['backendModule'])
       };
 
       userService.login = function (provider, credentials) {
+        alertService.closeAll();
         alertService.addWaiting();
         var promise = backendUserService.login(provider, credentials);
         promise.then(function (accountData) {
@@ -94,6 +95,7 @@ angular.module('userModule', ['backendModule'])
           function (error) {
             alertService.removeWaiting();
             alertService.addServerError(error);
+            console.log("For faen!?");
           }
         );
       };

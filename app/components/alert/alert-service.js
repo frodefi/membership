@@ -49,6 +49,7 @@ angular.module('alertModule').factory('alertService', ['$timeout',function($time
 
   alerts.closeAll = function() {
     alerts.list = [];
+    alerts.waiting = 0;
   };
 
   return alerts;

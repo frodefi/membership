@@ -30,7 +30,7 @@
           <td><a href="#/user/{{user.profile.username}}">{{user.profile.address}}</a></td>
           <td><a href="#/user/{{user.profile.username}}">{{user.profile.email}}</a></td>
           <td><a href="#/user/{{user.profile.username}}">{{user.profile.phone}}</a></td>
-          <td><a href="#/user/{{user.profile.username}}">{{user.lastModified}}</a></td>
+          <td><a href="#/user/{{user.profile.username}}">{{user.lastModified | date:'dd-MM-yyyy, HH:mm'}}</a></td>
         </tr>
       </table>
       </div>
