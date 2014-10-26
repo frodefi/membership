@@ -90,6 +90,10 @@ body { padding-top: 50px; }
   color: green;
 }
 
+.help-block {
+  display: inline;
+}
+
 .repeat-item.ng-enter,
 .repeat-item.ng-leave {
   -webkit-transition:1s linear all;
