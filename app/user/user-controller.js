@@ -1,5 +1,5 @@
 angular.module('app.controllers')
-  .controller('UserCtrl', ['$scope', '$window', 'userService', 'dataService','$routeSegment',
+  .controller('UserCtrl', ['$scope', '$window', 'userService', 'dataService', '$routeSegment',
     function ($scope, $window, userService, dataService, $routeSegment) {
       var warning = "You have unsaved changes, are you sure you want to leave this page?";
       var passwordNotUpdated = "Passw0rdNotUpdated!";
@@ -72,8 +72,7 @@ angular.module('app.controllers')
                 $scope.model.unsavedChanges = false;
               } else if (!$scope.model.unsavedChanges) {
                 removeListener = $scope.$on('$locationChangeStart', function (event, next, current) {
-                  if (!(/\/user(\/[^\/]+\/(account|profile|memberships|notes|boat))?$/.test(next)) &&
-                    !confirm(warning)) {
+                  if (!(/\/user(\/[^\/]+\/(account|profile|memberships|notes|boat))?$/.test(next)) && !confirm(warning)) {
                     event.preventDefault();
                   }
                 });
@@ -88,8 +87,7 @@ angular.module('app.controllers')
       };
 
       $scope.model.updateAll = function () {
-        if ($scope.model.data.thisUserUsername === $scope.model.user.account.username &&
-          !angular.equals($scope.model.user.account,$scope.model.user.pristine)) {
+        if ($scope.model.data.thisUserUsername === $scope.model.user.account.username && !angular.equals($scope.model.user.account, $scope.model.user.pristine)) {
           var userDetails = angular.copy($scope.model.user.account);
           delete userDetails.confirmPassword;
           if (userDetails.password === passwordNotUpdated) {

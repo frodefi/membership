@@ -53,17 +53,20 @@ angular.module('dataModule')
       };
 
       dataService.init = function (user) {
-        dataService.initThisUserData(user);
+        if (!dataService.thisUser) {
+          dataService.initThisUserData(user);
+        }
         alertService.addWaiting();
         var promise = backendDataService.loadAllUsersData();
         promise.then(
           function (success) {
-            var thisUserDataExists = false;
             if (success.length > 0) {
               angular.copy(success, dataService.usersArray);
               for (var i = 0; i < dataService.usersArray.length; i++) {
                 dataService.usersObject[dataService.usersArray[i].profile.username] = dataService.usersArray[i];
-                dataService.thisUser = dataService.usersArray[i];
+                if (dataService.thisUserUsername === dataService.usersArray[i].profile.username) {
+                  dataService.thisUser = dataService.usersArray[i];
+                }
               }
             }
             alertService.removeWaiting();
