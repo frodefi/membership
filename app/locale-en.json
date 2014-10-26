@@ -1,7 +1,7 @@
 {
   "Standard member": "Standard member",
   "Member type help text": "The status of this member type",
-  "Waiting for approval": "Waiting for approval",
+  "Awaiting approval": "Awaiting approval",
   "Deactivate": "Deactivate",
   "Active": "Active",
   "Request reactivation": "Request reactivation",
@@ -9,7 +9,7 @@
   "Send application": "Send application",
   "Request approval": "Request approval",
   "Renter": "Renter",
-  "": "",
+  "Activate": "Activate",
   "": "",
   "": "",
   "": "",

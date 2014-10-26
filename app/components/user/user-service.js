@@ -29,8 +29,8 @@ angular.module('userModule', ['backendModule'])
             alertService.removeWaiting();
             alertService.add({
               type: "success",
-              msg: "You are now logged in. Please remember to complete your profile.",
-              timeout: 5000
+              msg: "You are now logged in. Have fun!",
+              timeout: 5
             });
             $location.path('user/' + userService.account.username);
           },
@@ -55,13 +55,18 @@ angular.module('userModule', ['backendModule'])
           alertService.removeWaiting();
           alertService.add({
             type: "success",
-            msg: "You are now logged in. Please remember to complete your profile.",
-            timeout: 5000
+            msg: "You are now logged in. Have fun!",
+            timeout: 5
           });
           $location.path('user/' + userService.account.username);
         }, function (error) {
           alertService.removeWaiting();
-          alertService.addServerError(error);
+          console.log("error",error);
+          if (error.name === "InvalidCredentials") {
+            alertService.add({type: "warning", msg:"Wrong username and/or password. Please try again.",timeout: 5})
+          } else {
+            alertService.addServerError(error);
+          }
         });
         return promise;
       };

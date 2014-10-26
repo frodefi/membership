@@ -6,7 +6,8 @@
       <div class="col-sm-5">
         <div ng-class="{'custom-select': model.viewMode}">
           <select class="form-control"
-                  ng-focus="model.viewMode=false; model.setShowHelp('standard')"
+                  ng-focus="model.setViewMode(false); model.setShowHelp('standard'); model.membershipFocus=true;"
+                  ng-blur="model.membershipFocus=false;"
                   id="standard"
                   name="standard"
                   ng-options="status.name as status.text | translate for status in model.options.standard"
@@ -24,7 +25,8 @@
       <div class="col-sm-5">
         <div ng-class="{'custom-select': model.viewMode}">
           <select class="form-control"
-                  ng-focus="model.viewMode=false; model.setShowHelp('renter')"
+                  ng-focus="model.setViewMode(false); model.setShowHelp('renter'); model.membershipFocus=true;"
+                  ng-blur="model.membershipFocus=false;"
                   id="renter"
                   name="renter"
                   ng-options="status.name as status.text | translate for status in model.options.renter"
@@ -42,7 +44,8 @@
       <div class="col-sm-5">
         <div ng-class="{'custom-select': model.viewMode}">
           <select class="form-control"
-                  ng-focus="model.viewMode=false; model.setShowHelp('helper')"
+                  ng-focus="model.setViewMode(false); model.setShowHelp('helper'); model.membershipFocus=true;"
+                  ng-blur="model.membershipFocus=false;"
                   id="helper"
                   name="helper"
                   ng-options="status.name as status.text | translate for status in model.options.helper"
@@ -60,7 +63,8 @@
       <div class="col-sm-5">
         <div ng-class="{'custom-select': model.viewMode}">
           <select class="form-control"
-                  ng-focus="model.viewMode=false; model.setShowHelp('house')"
+                  ng-focus="model.setViewMode(false); model.setShowHelp('house'); model.membershipFocus=true;"
+                  ng-blur="model.membershipFocus=false;"
                   id="house"
                   name="house"
                   ng-options="status.name as status.text | translate for status in model.options.house"

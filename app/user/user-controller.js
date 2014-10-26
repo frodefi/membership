@@ -13,12 +13,19 @@ angular.module('app.controllers')
       $scope.model.user.account.confirmPassword = passwordNotUpdated;
       $scope.model.user.pristine = angular.copy($scope.model.user.account);
       $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
+      $scope.model.memberships = {};
       $scope.model.options = {};
       $scope.model.unsavedChanges = false;
       $scope.model.viewMode = true;
+      $scope.model.membershipFocus = false;
       $scope.model.submitText = "Save changes";
       var removeListener = function () {
       };
+      var memberships = ["standard", "renter", "helper", "house"];
+      angular.forEach(memberships, function (value) {
+        $scope.model.memberships[value] = "not active";
+      });
+
 
       $scope.model.hideEmpty = function (fields) {
         if ($scope.model.data.thisUserUsername === $scope.model.user.account.username ||
@@ -60,12 +67,16 @@ angular.module('app.controllers')
           // then Angular is still claiming that a form dirty and not in pristine condition.
           // We improve that by do a manually check and toggle $scope.model.unsavedChanges accordingly.
           // In addition we want to warn the user from leaving this site if there are unsaved form data.
-          var removeListener = function () {
-          };
           $scope.$watch(function () {
             return [$scope.model.user.account, $scope.model.data.thisUser];
           }, function (newValue, oldValue) {
-            if (!angular.equals(newValue, oldValue)) {
+            var tmpNewValue = angular.copy(newValue);
+            var tmpOldValue = angular.copy(oldValue);
+            delete tmpNewValue[0].lastModified; // This is not a form-field value
+            delete tmpNewValue[1].lastModified; // and it changes after saving
+            delete tmpOldValue[0].lastModified; // so let´s ignore it...
+            delete tmpOldValue[1].lastModified;
+            if (!angular.equals(tmpNewValue, tmpOldValue)) {
               if (!changed(newValue[0], $scope.model.user.pristine) && !changed(newValue[1], $scope.model.data.pristine)) {
                 removeListener();
                 $window.onbeforeunload = undefined;
@@ -102,8 +113,10 @@ angular.module('app.controllers')
           $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
         }
         $scope.model.viewMode = true;
-        removeListener();
+        $scope.model.unsavedChanges = false;
         $window.onbeforeunload = undefined;
+        removeListener();
+        updateSelectOptions();
       };
 
       $scope.model.resetPasswords = function () {
@@ -114,29 +127,42 @@ angular.module('app.controllers')
         });
       };
 
-      $scope.$watch('model.data.thisUser.memberships.standard', function () {
-        $scope.model.options.standard = setOptions('standard');
-      });
+      $scope.$watch('model.data.thisUser.memberships', function () {
+        updateSelectOptions();
+      }, true);
 
-      $scope.$watch('model.data.thisUser.memberships.renter', function () {
-        $scope.model.options.renter = setOptions('renter');
-      });
+      function updateSelectOptions() {
+        if (!$scope.model.membershipFocus && !$scope.model.unsavedChanges) {
+          angular.forEach(memberships, function (membership) {
+            $scope.model.options[membership] = setSelectOptions(membership);
+          });
+        }
+      }
 
-      $scope.$watch('model.data.thisUser.memberships.helper', function () {
-        $scope.model.options.helper = setOptions('helper');
-      });
-
-      $scope.$watch('model.data.thisUser.memberships.house', function () {
-        $scope.model.options.house = setOptions('house');
-      });
-
-      function setOptions(membership) {
+      function setSelectOptions(membership) {
         var status = $scope.model.data.thisUser.memberships[membership];
-        if (status === "pending") {
+        if ($scope.model.user.account.username === 'admin' &&
+          status === "pending") {
           return [
             {
               'name': 'pending',
-              'text': 'Waiting for approval'
+              'text': 'Awaiting approval'
+            },
+            {
+              'name': 'deactivated',
+              'text': 'Deactivate'
+            },
+            {
+              'name': 'active',
+              'text': 'Activate'
+            }
+          ];
+        } else if ($scope.model.user.account.username === $scope.model.data.thisUserUsername &&
+          status === "pending") {
+          return [
+            {
+              'name': 'pending',
+              'text': 'Awaiting approval'
             },
             {
               'name': 'deactivated',

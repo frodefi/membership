@@ -6,7 +6,8 @@
       <textarea
           rows="4"
           class="form-control"
-          ng-disabled="model.data.thisUserUsername !== model.user.account.username"
+          ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
+                          model.user.account.username !== 'admin'"
           ng-class="{'no-extras': model.viewMode}"
           ng-focus="model.setViewMode(false); model.setShowHelp('note')"
           id="note"
@@ -20,7 +21,8 @@
     </div>
   </div>
 </div>
-<div class="row" ng-show="model.data.thisUserUsername === model.user.account.username">
+<div class="row" ng-show="model.user.account.username === model.data.thisUserUsername ||
+                          model.user.account.username === 'admin'">
   <div class="form-group">
     <label for="notePrivate" class="col-sm-3 control-label">Note to administration</label>
 
@@ -28,7 +30,8 @@
       <textarea
           rows="4"
           class="form-control"
-          ng-disabled="model.data.thisUserUsername !== model.user.account.username"
+          ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
+                          model.user.account.username !== 'admin'"
           ng-class="{'no-extras': model.viewMode}"
           ng-focus="model.setViewMode(false); model.setShowHelp('notePrivate')"
           id="notePrivate"
@@ -40,7 +43,8 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.notePrivate">For your and admins eyes only</div>
   </div>
 </div>
-<div class="row" ng-show="model.data.thisUserUsername === model.user.account.username">
+<div class="row" ng-show="model.user.account.username === model.data.thisUserUsername ||
+                          model.user.account.username === 'admin'">
   <div class="form-group">
     <label for="noteAdmin" class="col-sm-3 control-label">Note from administration</label>
 
@@ -49,7 +53,7 @@
           rows="4"
           class="form-control"
           ng-class="{'no-extras': model.viewMode}"
-          ng-disabled="model.data.thisUserUsername !== 'admin'"
+          ng-disabled="model.user.account.username !== 'admin'"
           ng-focus="model.setViewMode(false); model.setShowHelp('noteAdmin')"
           id="noteAdmin"
           name="noteAdmin"

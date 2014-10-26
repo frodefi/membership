@@ -8,19 +8,24 @@ angular.module('alertModule').factory('alertService', ['$timeout',function($time
   alerts.add = function(alert) {
     alert.id = id;
     alerts.list.push(alert);
-    function timeoutCallback(id) {
+    function timeoutCallback(alert) {
       return function (){
-        alerts.close(id);
+        if (alert.timeout > 0) {
+          alert.timeout--;
+          $timeout(timeoutCallback(alert), 1000);
+        } else {
+          alerts.close(alert.id);
+        }
       }
     }
     if (alert.timeout > 0) {
-      $timeout(timeoutCallback(id), alert.timeout);
+      $timeout(timeoutCallback(alert), 1000);
     }
     id += 1;
     return alert.id;
   };
 
-//  alerts.add({type: "info", msg:"This is a test alert message...",timeout: 5000});
+//  alerts.add({type: "info", msg:"This is a test alert message...",timeout: 5});
 //  alerts.add({type: "info", msg:"This is a test alert message..."});
 
   alerts.addServerError = function(error) {

@@ -5,7 +5,8 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
+             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
+                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('name')"
              id="name"
@@ -23,7 +24,8 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
+             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
+                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('reg')"
              id="reg"
@@ -41,7 +43,8 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
+             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
+                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('type')"
              id="type"
@@ -59,7 +62,8 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
+             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
+                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('width')"
              id="width"
@@ -77,7 +81,8 @@
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.data.thisUserUsername !== model.user.account.username"
+             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
+                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('length')"
              id="length"

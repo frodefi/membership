@@ -31,7 +31,8 @@ angular.module('backendModule')
         return deferred.promise;
       };
 
-      backendDataService.save = function (data) {
+      backendDataService.save = function (objectReference) {
+        data = angular.copy(objectReference);
         console.log("backend-save:",data);
         delete data.createdAt;
         delete data.lastModified;
@@ -62,6 +63,8 @@ angular.module('backendModule')
         data.creatorId = data._acl.creator;
         data.createdAt = new Date(data._kmd.ect);
         data.lastModified = new Date(data._kmd.lmt);
+        delete data._acl;
+        delete data._kmd;
       }
     }
   ]);
