@@ -9,6 +9,7 @@ angular.module('dataModule')
       };
 
       var newUserInitData = {
+        userId: "",
         profile: {
           username: "",
           fullName: "",
@@ -26,6 +27,7 @@ angular.module('dataModule')
           house: "not active"
         },
         note: "",
+        managerUserId: "",
         limited: {
           notes: {
             toAdmin: "",
@@ -86,16 +88,22 @@ angular.module('dataModule')
 
       dataService.save = function () {
         alertService.addWaiting();
-        dataService.thisUser.workReports.unshift(dataService.thisUser.newWorkReport);
-        dataService.thisUser.newWorkReport = {};
+        var newReportMoved = false;
+        if (dataService.thisUser.newWorkReport.date && dataService.thisUser.newWorkReport.hours) {
+          dataService.thisUser.workReports.unshift(dataService.thisUser.newWorkReport);
+          dataService.thisUser.newWorkReport = {};
+          newReportMoved = true;
+        }
         var promise = backendDataService.save(dataService.thisUser);
         promise.then(
           function (success) {
-            angular.extend(dataService.thisUser,success);
+            angular.extend(dataService.thisUser, success);
             alertService.removeWaiting();
           },
           function (error) {
-            dataService.thisUser.newWorkReport = dataService.thisUser.workReports.shift();
+            if (newReportMoved) {
+              dataService.thisUser.newWorkReport = dataService.thisUser.workReports.shift();
+            }
             alertService.removeWaiting();
             alertService.addServerError(error);
           }
@@ -103,9 +111,20 @@ angular.module('dataModule')
       };
 
       dataService.logout = function () {
-        // todo: should probably do some deletion of data here...
+        // todo: should probably do some deletion of variable-data here...
       };
 
+      dataService.findUser = function (id) {
+        var data = "";
+        angular.forEach(dataService.usersArray, function (value) {
+          if (!data) {
+            if (value.userId === id) {
+              data = value;
+            }
+          }
+        });
+        return data;
+      };
       return dataService;
     }
   ])

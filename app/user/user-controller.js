@@ -112,7 +112,7 @@ angular.module('app.controllers')
                 $scope.model.unsavedChanges = false;
               } else if (!$scope.model.unsavedChanges) {
                 removeListener = $scope.$on('$locationChangeStart', function (event, next, current) {
-                  if (!(/\/user(\/[^\/]+\/(account|profile|memberships|notes|boat))?$/.test(next)) && !confirm(warning)) {
+                  if (!(/\/user(\/[^\/]+\/(account|profile|memberships|notes|work-report|details|boat))?$/.test(next)) && !confirm(warning)) {
                     event.preventDefault();
                   }
                 });

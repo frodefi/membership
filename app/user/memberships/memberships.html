@@ -20,6 +20,56 @@
     </div>
   </div>
 </div>
+<div class="row" ng-hide="model.otherUser() && model.emptyMembershipValue(model.data.thisUser.memberships.standard)">
+  <div class="form-group">
+    <label for="manager" class="col-sm-3 control-label">Manager of standard membership</label>
+
+    <div class="col-sm-5">
+      <input type="radio"
+             id="manager"
+             ng-focus="model.setViewMode(false); model.setShowHelp('standard')"
+             ng-model="model.thisUserManager"
+             ng-checked="!model.data.thisUser.managerUserId"
+             ng-disabled="model.otherUser()"
+             ng-click="model.data.thisUser.managerUserId=''"
+             value="myself"> Myself
+      <input type="radio"
+             ng-focus="model.setViewMode(false); model.setShowHelp('standard')"
+             ng-model="model.thisUserManager"
+             ng-disabled="model.otherUser()"
+             ng-checked="model.data.thisUser.managerUserId"
+             value="other"> Other<span ng-show="model.data.thisUser.managerUserId">: {{model.data.findUser(model.data.thisUser.managerUserId).profile.fullName}}</span>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.standard">Who will manage the membership?<br>Must be a registered user.
+    </div>
+  </div>
+</div>
+<div class="row" ng-show="!model.otherUser && (model.data.thisUser.managerUserId || model.thisUserManager === 'other')">
+  <div class="col-sm-5 col-sm-offset-3">
+    <div class="form-group">
+      <input type="text"
+             ng-model="model.query"
+             ng-focus="model.setViewMode(false); model.setShowHelp('standard')"
+             class="form-control"
+             placeholder="Find a user">
+    </div>
+  </div>
+  <div class="col-sm-4 help-block" ng-show="model.showHelp.standard">
+    Just start typing something user-related, like a name...
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-5 col-sm-offset-3">
+    <ul class="list-unstyled" ng-show="model.query">
+      <li ng-repeat="userData in model.data.usersArray | filter:model.query | orderBy:profile.fullName | limitTo: 3">
+        <a href="" ng-click="model.data.thisUser.managerUserId=userData.userId; model.query='';">
+          {{userData.profile.fullName}} ({{userData.profile.username}}), {{userData.profile.address}}
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm-4 help-block"></div>
+</div>
 <div class="row" ng-hide="model.otherUser() && model.emptyMembershipValue(model.data.thisUser.memberships.renter)">
   <div class="form-group">
     <label for="renter" class="col-sm-3 control-label"><span translate>Renter</span></label>
