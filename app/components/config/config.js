@@ -38,9 +38,11 @@ angular.module('app.config')
         .when('/user/:username', 'user')
         .when('/user/:username/account', 'user.account')
         .when('/user/:username/profile', 'user.profile')
-        .when('/user/:username/boat', 'user.boat')
         .when('/user/:username/memberships', 'user.memberships')
         .when('/user/:username/notes', 'user.notes')
+        .when('/user/:username/work-report', 'user.workReport')
+        .when('/user/:username/details', 'user.details')
+        .when('/user/:username/boat', 'user.boat')
 
         .segment('frontpage', {
           templateUrl: 'app.html',
@@ -59,6 +61,10 @@ angular.module('app.config')
           templateUrl: 'user/memberships/memberships.html'})
         .segment('notes', {
           templateUrl: 'user/notes/notes.html'})
+        .segment('work-report', {
+          templateUrl: 'user/work-report/work-report.html'})
+        .segment('details', {
+          templateUrl: 'user/details/details.html'})
         .segment('boat', {
           templateUrl: 'user/boat/boat.html'})
         .up()

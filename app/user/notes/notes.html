@@ -1,13 +1,12 @@
-<div class="row">
+<div class="row" ng-hide="model.otherUser() && !model.data.thisUser.note">
   <div class="form-group">
     <label for="note" class="col-sm-3 control-label">Note to public</label>
 
     <div class="col-sm-5">
       <textarea
-          rows="4"
+          rows="3"
           class="form-control"
-          ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+          ng-disabled="model.otherUser()"
           ng-class="{'no-extras': model.viewMode}"
           ng-focus="model.setViewMode(false); model.setShowHelp('note')"
           id="note"
@@ -21,47 +20,45 @@
     </div>
   </div>
 </div>
-<div class="row" ng-show="model.user.account.username === model.data.thisUserUsername ||
-                          model.user.account.username === 'admin'">
-  <div class="form-group">
-    <label for="notePrivate" class="col-sm-3 control-label">Note to administration</label>
+<div ng-hide="model.otherUser()">
+  <div class="row">
+    <div class="form-group">
+      <label for="notePrivate" class="col-sm-3 control-label">Note to administration</label>
 
-    <div class="col-sm-5">
-      <textarea
-          rows="4"
-          class="form-control"
-          ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
-          ng-class="{'no-extras': model.viewMode}"
-          ng-focus="model.setViewMode(false); model.setShowHelp('notePrivate')"
-          id="notePrivate"
-          name="notePrivate"
-          placeholder="Enter any information that is only interesting for the administration"
-          ng-model="model.data.thisUser.limited.notes.toAdmin">
-      </textarea>
+      <div class="col-sm-5">
+        <textarea
+            rows="3"
+            class="form-control"
+            ng-class="{'no-extras': model.viewMode}"
+            ng-focus="model.setViewMode(false); model.setShowHelp('notePrivate')"
+            id="notePrivate"
+            name="notePrivate"
+            placeholder="Enter any information that is only interesting for the administration"
+            ng-model="model.data.thisUser.limited.notes.toAdmin">
+        </textarea>
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.notePrivate">For your and admins eyes only</div>
     </div>
-    <div class="col-sm-4 help-block" ng-show="model.showHelp.notePrivate">For your and admins eyes only</div>
   </div>
-</div>
-<div class="row" ng-show="model.user.account.username === model.data.thisUserUsername ||
-                          model.user.account.username === 'admin'">
-  <div class="form-group">
-    <label for="noteAdmin" class="col-sm-3 control-label">Note from administration</label>
+  <div class="row">
+    <div class="form-group">
+      <label for="noteAdmin" class="col-sm-3 control-label">Note from administration</label>
 
-    <div class="col-sm-5">
-      <textarea
-          rows="4"
-          class="form-control"
-          ng-class="{'no-extras': model.viewMode}"
-          ng-disabled="model.user.account.username !== 'admin'"
-          ng-focus="model.setViewMode(false); model.setShowHelp('noteAdmin')"
-          id="noteAdmin"
-          name="noteAdmin"
-          placeholder="Notes from the administration will appear here"
-          ng-model="model.data.thisUser.limited.notes.fromAdmin">
-      </textarea>
-    </div>
-    <div class="col-sm-4 help-block" ng-show="model.showHelp.noteAdmin">Note from the administration
+      <div class="col-sm-5">
+        <textarea
+            rows="3"
+            class="form-control"
+            ng-class="{'no-extras': model.viewMode}"
+            ng-disabled="model.user.account.username !== 'admin'"
+            ng-focus="model.setViewMode(false); model.setShowHelp('noteAdmin')"
+            id="noteAdmin"
+            name="noteAdmin"
+            placeholder="Notes from the administration will appear here"
+            ng-model="model.data.thisUser.limited.notes.fromAdmin">
+        </textarea>
+      </div>
+      <div class="col-sm-4 help-block" ng-show="model.showHelp.noteAdmin">Note from the administration
+      </div>
     </div>
   </div>
 </div>

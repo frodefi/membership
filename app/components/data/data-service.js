@@ -25,19 +25,24 @@ angular.module('dataModule')
           helper: "not active",
           house: "not active"
         },
-        boat: {
-          admin: "self",
-          name: "",
-          width: "",
-          length: "",
-          berth: ""
-        },
         note: "",
         limited: {
           notes: {
             toAdmin: "",
             fromAdmin: ""
           }
+        },
+        newWorkReport: {
+          date: "",
+          comment: "",
+          hours: ""
+        },
+        workReports: [],
+        boat: {
+          name: "",
+          width: "",
+          length: "",
+          berth: ""
         }
       };
 
@@ -79,15 +84,18 @@ angular.module('dataModule')
         ;
       };
 
-      dataService.save = function (username) {
+      dataService.save = function () {
         alertService.addWaiting();
-        var promise = backendDataService.save(dataService.usersObject[username]);
+        dataService.thisUser.workReports.unshift(dataService.thisUser.newWorkReport);
+        dataService.thisUser.newWorkReport = {};
+        var promise = backendDataService.save(dataService.thisUser);
         promise.then(
           function (success) {
-            angular.extend(dataService.usersObject[username],success);
+            angular.extend(dataService.thisUser,success);
             alertService.removeWaiting();
           },
           function (error) {
+            dataService.thisUser.newWorkReport = dataService.thisUser.workReports.shift();
             alertService.removeWaiting();
             alertService.addServerError(error);
           }

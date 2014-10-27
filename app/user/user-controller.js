@@ -22,26 +22,55 @@ angular.module('app.controllers')
       var removeListener = function () {
       };
       var memberships = ["standard", "renter", "helper", "house"];
+      var emptyMembershipValues = ['not active','deactivated'];
       angular.forEach(memberships, function (value) {
         $scope.model.memberships[value] = "not active";
       });
 
+      // Datepicker
+      $scope.model.datepicker = {};
+      $scope.model.datepicker.format = 'dd.MM.yyyy';
+      $scope.model.datepicker.dateOptions = {
+        formatYear: 'yy',
+        startingDay: 1
+      };
+      $scope.model.datepicker.today = new Date();
+      $scope.model.data.thisUser.newWorkReport.date = new Date();
+      $scope.model.datepicker.clear = function () {
+        $scope.model.data.thisUser.newWorkReport.date = null;
+      };
+      $scope.model.datepicker.open = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.model.datepicker.opened = true;
+      };
 
-      $scope.model.hideEmpty = function (fields) {
-        if ($scope.model.data.thisUserUsername === $scope.model.user.account.username ||
-          $scope.model.user.account.username === "admin") {
-          return false; // We do not hide any empty from the owner of the data or admin (those who can edit)
-        }
+      // membership values are never empty (like ""), so test for the equivalent
+      $scope.model.emptyMembershipValue = function (value) {
+        return emptyMembershipValues.indexOf(value) >= 0;
+      };
+
+      $scope.model.otherUser = function () {
+        return userService.account.username !== dataService.thisUserUsername &&
+          userService.account.username !== 'admin';
+      };
+
+      $scope.model.isEmpty = function (data) {
         var isEmpty = true;
-        if (!angular.isArray(fields)) {
-          fields = [fields];
+        if (angular.isObject(data)) {
+          angular.forEach(data, function (value, key) {
+            if (isEmpty) {
+              if (angular.isObject(value)) {
+                isEmpty = $scope.model.isEmpty(value);
+              } else if (value &&
+                        !(key && memberships.indexOf(key) && $scope.model.emptyMembershipValue(value))) {
+                isEmpty = false;
+              }
+            }
+          });
+        } else if (data) {
+          isEmpty = false;
         }
-        angular.forEach(fields, function (value) {
-          values = value.split(".");
-          if ($scope.model.data.thisUser[value] || $scope.model.data.thisUser[values[0]][values[1]]) {
-            isEmpty = false;
-          }
-        });
         return isEmpty;
       };
 
@@ -113,6 +142,7 @@ angular.module('app.controllers')
           $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
         }
         $scope.model.viewMode = true;
+        $scope.model.setShowHelp();
         $scope.model.unsavedChanges = false;
         $window.onbeforeunload = undefined;
         removeListener();
@@ -157,8 +187,7 @@ angular.module('app.controllers')
               'text': 'Activate'
             }
           ];
-        } else if ($scope.model.user.account.username === $scope.model.data.thisUserUsername &&
-          status === "pending") {
+        } else if (status === "pending") {
           return [
             {
               'name': 'pending',
@@ -216,7 +245,7 @@ angular.module('app.controllers')
       function changed(a, b) {
         var result = false;
         angular.forEach(a, function (value, key) {
-          if (!result && key.charAt(0) !== "_" && hasValue(value)) {
+          if (!result && !angular.isArray(value) && key.charAt(0) !== "_" && hasValue(value)) {
             if (b.hasOwnProperty(key)) {
               if (angular.isObject(value)) {
                 if (changed(value, b[key])) {

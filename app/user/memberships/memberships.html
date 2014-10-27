@@ -1,78 +1,82 @@
-<form class="form-horizontal" role="form" name="form" novalidate ng-submit="model.save()">
-  <div class="row">
-    <div class="form-group">
-      <label for="standard" class="col-sm-3 control-label"><span translate>Standard member</span></label>
+<div class="row" ng-hide="model.otherUser() && model.emptyMembershipValue(model.data.thisUser.memberships.standard)">
+  <div class="form-group">
+    <label for="standard" class="col-sm-3 control-label"><span translate>Standard member</span></label>
 
-      <div class="col-sm-5">
-        <div ng-class="{'custom-select': model.viewMode}">
-          <select class="form-control"
-                  ng-focus="model.setViewMode(false); model.setShowHelp('standard'); model.membershipFocus=true;"
-                  ng-blur="model.membershipFocus=false;"
-                  id="standard"
-                  name="standard"
-                  ng-options="status.name as status.text | translate for status in model.options.standard"
-                  ng-model="model.data.thisUser.memberships.standard">
-          </select>
-        </div>
+    <div class="col-sm-5">
+      <div ng-class="{'custom-select': model.viewMode}">
+        <select class="form-control"
+                ng-focus="model.setViewMode(false); model.setShowHelp('standard'); model.membershipFocus=true;"
+                ng-blur="model.membershipFocus=false;"
+                ng-disabled="model.otherUser()"
+                ng-class="{'no-extras': model.viewMode}"
+                id="standard"
+                name="standard"
+                ng-options="status.name as status.text | translate for status in model.options.standard"
+                ng-model="model.data.thisUser.memberships.standard">
+        </select>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.standard"><span translate>Member type help text</span></div>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.standard"><span translate>Member type help text</span>
     </div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="renter" class="col-sm-3 control-label"><span translate>Renter</span></label>
+</div>
+<div class="row" ng-hide="model.otherUser() && model.emptyMembershipValue(model.data.thisUser.memberships.renter)">
+  <div class="form-group">
+    <label for="renter" class="col-sm-3 control-label"><span translate>Renter</span></label>
 
-      <div class="col-sm-5">
-        <div ng-class="{'custom-select': model.viewMode}">
-          <select class="form-control"
-                  ng-focus="model.setViewMode(false); model.setShowHelp('renter'); model.membershipFocus=true;"
-                  ng-blur="model.membershipFocus=false;"
-                  id="renter"
-                  name="renter"
-                  ng-options="status.name as status.text | translate for status in model.options.renter"
-                  ng-model="model.data.thisUser.memberships.renter">
-          </select>
-        </div>
+    <div class="col-sm-5">
+      <div ng-class="{'custom-select': model.viewMode}">
+        <select class="form-control"
+                ng-focus="model.setViewMode(false); model.setShowHelp('renter'); model.membershipFocus=true;"
+                ng-blur="model.membershipFocus=false;"
+                ng-class="{'no-extras': model.viewMode}"
+                id="renter"
+                name="renter"
+                ng-options="status.name as status.text | translate for status in model.options.renter"
+                ng-model="model.data.thisUser.memberships.renter">
+        </select>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.renter"><span translate>Member type help text</span></div>
     </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.renter"><span translate>Member type help text</span></div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="helper" class="col-sm-3 control-label"><span translate>Helper</span></label>
+</div>
+<div class="row" ng-hide="model.otherUser() && model.emptyMembershipValue(model.data.thisUser.memberships.helper)">
+  <div class="form-group">
+    <label for="helper" class="col-sm-3 control-label"><span translate>Helper</span></label>
 
-      <div class="col-sm-5">
-        <div ng-class="{'custom-select': model.viewMode}">
-          <select class="form-control"
-                  ng-focus="model.setViewMode(false); model.setShowHelp('helper'); model.membershipFocus=true;"
-                  ng-blur="model.membershipFocus=false;"
-                  id="helper"
-                  name="helper"
-                  ng-options="status.name as status.text | translate for status in model.options.helper"
-                  ng-model="model.data.thisUser.memberships.helper">
-          </select>
-        </div>
+    <div class="col-sm-5">
+      <div ng-class="{'custom-select': model.viewMode}">
+        <select class="form-control"
+                ng-focus="model.setViewMode(false); model.setShowHelp('helper'); model.membershipFocus=true;"
+                ng-blur="model.membershipFocus=false;"
+                ng-class="{'no-extras': model.viewMode}"
+                id="helper"
+                name="helper"
+                ng-options="status.name as status.text | translate for status in model.options.helper"
+                ng-model="model.data.thisUser.memberships.helper">
+        </select>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.helper"><span translate>Member type help text</span></div>
     </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.helper"><span translate>Member type help text</span></div>
   </div>
-  <div class="row">
-    <div class="form-group">
-      <label for="house" class="col-sm-3 control-label"><span translate>House</span></label>
+</div>
+<div class="row" ng-hide="model.otherUser() && model.emptyMembershipValue(model.data.thisUser.memberships.house)">
+  <div class="form-group">
+    <label for="house" class="col-sm-3 control-label"><span translate>House</span></label>
 
-      <div class="col-sm-5">
-        <div ng-class="{'custom-select': model.viewMode}">
-          <select class="form-control"
-                  ng-focus="model.setViewMode(false); model.setShowHelp('house'); model.membershipFocus=true;"
-                  ng-blur="model.membershipFocus=false;"
-                  id="house"
-                  name="house"
-                  ng-options="status.name as status.text | translate for status in model.options.house"
-                  ng-model="model.data.thisUser.memberships.house">
-          </select>
-        </div>
+    <div class="col-sm-5">
+      <div ng-class="{'custom-select': model.viewMode}">
+        <select class="form-control"
+                ng-focus="model.setViewMode(false); model.setShowHelp('house'); model.membershipFocus=true;"
+                ng-blur="model.membershipFocus=false;"
+                ng-class="{'no-extras': model.viewMode}"
+                id="house"
+                name="house"
+                ng-options="status.name as status.text | translate for status in model.options.house"
+                ng-model="model.data.thisUser.memberships.house">
+        </select>
       </div>
-      <div class="col-sm-4 help-block" ng-show="model.showHelp.house"><span translate>Member type help text</span></div>
     </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.house"><span translate>Member type help text</span></div>
   </div>
-</form>
+</div>

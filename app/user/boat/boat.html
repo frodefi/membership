@@ -1,12 +1,10 @@
-<div class="row">
+<div class="row" ng-hide="model.otherUser() && !model.data.thisUser.boat.name">
   <div class="form-group">
     <label for="name" class="col-sm-3 control-label">Name</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('name')"
              id="name"
@@ -17,15 +15,13 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.name">Name of boat</div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-hide="model.otherUser() && !model.data.thisUser.boat.reg">
   <div class="form-group">
     <label for="reg" class="col-sm-3 control-label">Registration number</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('reg')"
              id="reg"
@@ -36,15 +32,13 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.reg">The boats official registration number</div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-hide="model.otherUser() && !model.data.thisUser.boat.type">
   <div class="form-group">
     <label for="type" class="col-sm-3 control-label">Type</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('type')"
              id="type"
@@ -55,7 +49,7 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.type">Boat type, like "Hansavik 23"</div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-hide="model.otherUser() && !model.data.thisUser.boat.width">
   <div class="form-group">
     <label for="width" class="col-sm-3 control-label">Width</label>
 
@@ -74,7 +68,7 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.width">Boat width in meter, like "2,3"</div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-hide="model.otherUser() && !model.data.thisUser.boat.length">
   <div class="form-group">
     <label for="length" class="col-sm-3 control-label">Length</label>
 

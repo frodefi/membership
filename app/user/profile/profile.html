@@ -20,15 +20,14 @@
     <div class="col-sm-4 help-block"></div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty('profile.fullName')">
+<div class="row" ng-hide="model.isEmpty(model.data.thisUser.profile.fullName)">
   <div class="form-group">
     <label for="fullName" class="col-sm-3 control-label">Full name</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+             ng-disabled="model.otherUser()"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('fullName')"
              id="fullName"
@@ -39,7 +38,9 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.fullName">Your full name</div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty(['profile.email','profile.phone','profile.address'])">
+<div class="row" ng-hide="model.isEmpty([model.data.thisUser.profile.email,
+                                         model.data.thisUser.profile.phone,
+                                         model.data.thisUser.profile.address])">
   <!--
       Todo:Should perhaps change Bootstraps form-group to something else for things that are not actually form-fields?
       Here and a few other places...
@@ -50,15 +51,14 @@
     <div class="col-sm-9"></div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty('profile.email')">
+<div class="row" ng-hide="model.isEmpty(model.data.thisUser.profile.email)">
   <div class="form-group">
     <label for="email" class="col-sm-3 control-label">Email</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+             ng-disabled="model.otherUser()"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('email')"
              id="email"
@@ -69,15 +69,14 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.email">Main email address. Note: May be different from the account email address</div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty('profile.phone')">
+<div class="row" ng-hide="model.isEmpty(model.data.thisUser.profile.phone)">
   <div class="form-group">
     <label for="phone" class="col-sm-3 control-label">Phone</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+             ng-disabled="model.otherUser()"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('phone')"
              id="phone"
@@ -88,15 +87,14 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.phone">Main phone number</div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty('profile.address')">
+<div class="row" ng-hide="model.isEmpty(model.data.thisUser.profile.address)">
   <div class="form-group">
     <label for="address" class="col-sm-3 control-label">Address</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+             ng-disabled="model.otherUser()"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('address')"
              id="address"
@@ -107,22 +105,23 @@
     <div class="col-sm-4 help-block" ng-show="model.showHelp.address">Main full postal address for sending mail</div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty(['profile.email2','profile.phone2','profile.address2'])">
+<div class="row" ng-hide="model.isEmpty([model.data.thisUser.profile.email2,
+                                         model.data.thisUser.profile.phone2,
+                                         model.data.thisUser.profile.address2])">
   <div class="form-group">
     <label class="col-sm-3 control-label">Optional second contact info:</label>
 
     <div class="col-sm-9"></div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty('profile.email2')">
+<div class="row" ng-hide="model.isEmpty(model.data.thisUser.profile.email2)">
   <div class="form-group">
     <label for="email2" class="col-sm-3 control-label">Email</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+             ng-disabled="model.otherUser()"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('email2')"
              id="email2"
@@ -135,15 +134,14 @@
     </div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty('profile.phone2')">
+<div class="row" ng-hide="model.isEmpty(model.data.thisUser.profile.phone2)">
   <div class="form-group">
     <label for="phone2" class="col-sm-3 control-label">Phone</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+             ng-disabled="model.otherUser()"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('phone2')"
              id="phone2"
@@ -155,15 +153,14 @@
     </div>
   </div>
 </div>
-<div class="row" ng-hide="model.hideEmpty('profile.address2')">
+<div class="row" ng-hide="model.isEmpty(model.data.thisUser.profile.address2)">
   <div class="form-group">
     <label for="address2" class="col-sm-3 control-label">Address</label>
 
     <div class="col-sm-5">
       <input type="text"
              class="form-control"
-             ng-disabled="model.user.account.username !== model.data.thisUserUsername &&
-                          model.user.account.username !== 'admin'"
+             ng-disabled="model.otherUser()"
              ng-class="{'no-extras': model.viewMode}"
              ng-focus="model.setViewMode(false); model.setShowHelp('address2')"
              id="address2"
