@@ -92,6 +92,7 @@ angular.module('app.controllers')
         } else {
           $scope.model.user.pristine = angular.copy($scope.model.user.account);
           $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
+          $scope.model.data.justSaved = false;
           // If the user edits the form and then undo this by deleting/changing back the entered data,
           // then Angular is still claiming that a form dirty and not in pristine condition.
           // We improve that by do a manually check and toggle $scope.model.unsavedChanges accordingly.
@@ -105,13 +106,13 @@ angular.module('app.controllers')
             delete tmpNewValue[1].lastModified; // and it changes after saving
             delete tmpOldValue[0].lastModified; // so let´s ignore it...
             delete tmpOldValue[1].lastModified;
-            console.log("Hey!");
             if (!angular.equals(tmpNewValue, tmpOldValue)) {
               if (!changed(newValue[0], $scope.model.user.pristine) && !changed(newValue[1], $scope.model.data.pristine)) {
                 removeListener();
                 $window.onbeforeunload = undefined;
                 $scope.model.unsavedChanges = false;
-              } else if (!$scope.model.unsavedChanges) {
+              } else if (!$scope.model.unsavedChanges && !$scope.model.data.ignoreWatch) {
+                console.log("hey");
                 removeListener = $scope.$on('$locationChangeStart', function (event, next, current) {
                   if (!(/\/user(\/[^\/]+\/(account|profile|memberships|notes|work-report|details|boat))?$/.test(next)) && !confirm(warning)) {
                     event.preventDefault();
@@ -139,7 +140,7 @@ angular.module('app.controllers')
           $scope.model.user.pristine = angular.copy($scope.model.user.account);
         }
         if (!angular.equals($scope.model.data.thisUser, $scope.model.data.pristine)) {
-          dataService.save($scope.model.data.thisUserUsername);
+          dataService.save(userService.account.username);
           $scope.model.data.pristine = angular.copy($scope.model.data.thisUser);
         }
         $scope.model.viewMode = true;
@@ -148,6 +149,7 @@ angular.module('app.controllers')
         $window.onbeforeunload = undefined;
         removeListener();
         updateSelectOptions();
+        console.log("yeh,",removeListener);
       };
 
       $scope.model.resetPasswords = function () {

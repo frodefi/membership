@@ -62,3 +62,23 @@
     </div>
   </div>
 </div>
+<div class="row" ng-show="model.user.account.username === 'admin'">
+  <div class="form-group">
+    <label for="noteAdminPrivate" class="col-sm-3 control-label">Private for admin</label>
+
+    <div class="col-sm-5">
+      <textarea
+          rows="6"
+          class="form-control"
+          ng-class="{'no-extras': model.viewMode}"
+          ng-focus="model.setViewMode(false); model.setShowHelp('noteAdminPrivate')"
+          id="noteAdminPrivate"
+          name="noteAdminPrivate"
+          placeholder="Private note viewable for admin only"
+          ng-model="model.data.thisUser.admin.note">
+      </textarea>
+    </div>
+    <div class="col-sm-4 help-block" ng-show="model.showHelp.noteAdminPrivate">For admin eyes only
+    </div>
+  </div>
+</div>

@@ -45,10 +45,11 @@ angular.module('dataModule')
 
       function initData () {
         dataService.thisUserUsername = "";
+        dataService.ignoreWatch = false;
         dataService.usersArray = [];
         dataService.usersObject = {};
         dataService.thisUser = angular.copy(newUserInitData);
-      };
+      }
 
       initData();
 
@@ -87,24 +88,24 @@ angular.module('dataModule')
         ;
       };
 
-      dataService.save = function () {
+      dataService.save = function (authenticatedUser) {
         alertService.addWaiting();
-        var newReportMoved = false;
-        if (dataService.thisUser.newWorkReport.date && dataService.thisUser.newWorkReport.hours) {
-          dataService.thisUser.workReports.unshift(dataService.thisUser.newWorkReport);
-          dataService.thisUser.newWorkReport = {};
-          newReportMoved = true;
+        var data = angular.copy(dataService.thisUser);
+        if (data.newWorkReport.date && data.newWorkReport.hours) {
+          data.workReports.unshift(data.newWorkReport);
         }
-        var promise = backendDataService.save(dataService.thisUser);
+        data.newWorkReport = {};
+        if (authenticatedUser !== 'admin' && data.admin) {
+          delete data.admin;
+        }
+        var promise = backendDataService.save(data);
         promise.then(
           function (success) {
             angular.extend(dataService.thisUser, success);
+            dataService.ignoreWatch = true;
             alertService.removeWaiting();
           },
           function (error) {
-            if (newReportMoved) {
-              dataService.thisUser.newWorkReport = dataService.thisUser.workReports.shift();
-            }
             alertService.removeWaiting();
             alertService.addServerError(error);
           }
@@ -113,6 +114,7 @@ angular.module('dataModule')
 
       dataService.logout = function () {
         initData();
+        dataService.ignoreWatch = true;
       };
 
       dataService.findUser = function (id) {
