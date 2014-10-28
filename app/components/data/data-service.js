@@ -1,12 +1,7 @@
 angular.module('dataModule')
   .factory('dataService', ['backendDataService', 'alertService',
     function (backendDataService, alertService) {
-      var dataService = {
-        thisUserUsername: "",
-        usersArray: [],
-        usersObject: {},
-        thisUser: {}
-      };
+      var dataService = {};
 
       var newUserInitData = {
         userId: "",
@@ -48,21 +43,27 @@ angular.module('dataModule')
         }
       };
 
+      function initData () {
+        dataService.thisUserUsername = "";
+        dataService.usersArray = [];
+        dataService.usersObject = {};
+        dataService.thisUser = angular.copy(newUserInitData);
+      };
+
+      initData();
+
       dataService.initThisUserData = function (user) {
         if (dataService.usersObject[user.username]) {
           dataService.thisUser = dataService.usersObject[user.username];
         } else {
-          newUserInitData.profile.username = user.username;
-          newUserInitData.profile.email = user.email || "";
-          dataService.usersObject[user.username] = newUserInitData;
-          dataService.thisUser = newUserInitData;
+          dataService.thisUser.profile.username = user.username;
+          dataService.thisUser.profile.email = user.email || "";
+          dataService.usersObject[user.username] = dataService.thisUser;
         }
       };
 
       dataService.init = function (user) {
-        if (!dataService.thisUser) {
-          dataService.initThisUserData(user);
-        }
+        dataService.initThisUserData(user);
         alertService.addWaiting();
         var promise = backendDataService.loadAllUsersData();
         promise.then(
@@ -111,7 +112,7 @@ angular.module('dataModule')
       };
 
       dataService.logout = function () {
-        // todo: should probably do some deletion of variable-data here...
+        initData();
       };
 
       dataService.findUser = function (id) {

@@ -1,7 +1,8 @@
 angular.module('app.controllers')
-  .controller('CreateCtrl', ['$scope', 'userService',
-    function ($scope, userService) {
-
+  .controller('CreateCtrl', ['$scope', 'userService', 'dataService',
+    function ($scope, userService, dataService) {
+      console.log("create, data", dataService);
+      console.log("create, user", userService);
       $scope.model = {};
       $scope.model.user = userService;
       $scope.model.viewMode = false;

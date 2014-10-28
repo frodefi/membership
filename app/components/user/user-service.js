@@ -1,20 +1,20 @@
 angular.module('userModule', ['backendModule'])
   .factory('userService', ['backendUserService', 'alertService', '$location', 'dataService',
     function (backendUserService, alertService, $location, dataService) {
-      var userService = {
-        account: {}
-      };
+      var userService = {};
 
       initProperties();
 
       function initProperties() {
+        userService.account = {};
         userService.account.username = "";
         userService.account.email = "";
         userService.authenticated = false;
       }
 
       userService.init = function (initialUser) {
-        userService.account = angular.extend({}, initialUser);
+        initProperties();
+        angular.extend(userService.account, initialUser);
         userService.authenticated = true;
         dataService.init(userService.account);
       };
@@ -25,7 +25,7 @@ angular.module('userModule', ['backendModule'])
         promise.then(
           function () {
             userService.init(credentials);
-            dataService.save(credentials.username);
+            dataService.save();
             alertService.removeWaiting();
             alertService.add({
               type: "success",
@@ -61,7 +61,6 @@ angular.module('userModule', ['backendModule'])
           $location.path('user/' + userService.account.username);
         }, function (error) {
           alertService.removeWaiting();
-          console.log("error",error);
           if (error.name === "InvalidCredentials") {
             alertService.add({type: "warning", msg:"Wrong username and/or password. Please try again.",timeout: 5})
           } else {
@@ -85,22 +84,23 @@ angular.module('userModule', ['backendModule'])
         );
       };
 
-      userService.save = function (newUserData) {
+      userService.save = function (newUserAccountData) {
         alertService.addWaiting();
-        var promise = backendUserService.update(newUserData);
+        var promise = backendUserService.update(newUserAccountData);
         promise.then(
           function (success) {
-            if (newUserData.username !== userService.account.username) {
-              dataService.usersObject[newUserData.username] = dataService.usersObject[userService.username];
-              delete dataService.usersObject[userService.username];
+            if (newUserAccountData.username !== userService.account.username) {
+              dataService.usersObject[userService.account.username].profile.username = newUserAccountData.username;
+              dataService.save(userService.account.username);
+              dataService.usersObject[newUserAccountData.username] = dataService.usersObject[userService.account.username];
+              delete dataService.usersObject[userService.account.username];
             }
-            angular.extend(userService.account, newUserData);
+            angular.extend(userService.account, newUserAccountData);
             alertService.removeWaiting();
           },
           function (error) {
             alertService.removeWaiting();
             alertService.addServerError(error);
-            console.log("For faen!?");
           }
         );
       };

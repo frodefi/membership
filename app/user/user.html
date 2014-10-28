@@ -28,8 +28,8 @@
         <a href="#/user/{{model.data.thisUserUsername}}/work-report">Work Report</a>
       </li>
       <li ng-show="model.otherUser() && !model.isEmpty([model.data.thisUser.memberships,
-                                                      model.data.thisUser.notes,
-                                                      model.data.thisUser.workReports])"
+                                                        model.data.thisUser.notes,
+                                                        model.data.thisUser.workReports])"
           ng-class="{active: ('user.details' | routeSegmentEqualsTo)}">
         <a href="#/user/{{model.data.thisUserUsername}}/details">Details</a>
       </li>
@@ -54,8 +54,8 @@
   <div ng-include="'user/submit-button.html'"></div>
 </form>
   <div class="row" ng-show="(('user.workReport' | routeSegmentEqualsTo) ||
-                           ('user.details'    | routeSegmentEqualsTo)) &&
-                          model.data.thisUser.workReports.length>0">
+                             ('user.details'    | routeSegmentEqualsTo)) &&
+                            model.data.thisUser.workReports.length>0">
   <div class="col-sm-12">
     <h4>Work Report History</h4>
     <table class="table">
@@ -64,7 +64,7 @@
         <th>Comment</th>
         <th>Hours</th>
       </tr>
-      <tr ng-repeat="report in model.data.thisUser.workReports | orderBy:'date'">
+      <tr ng-repeat="report in model.data.thisUser.workReports | orderBy:'date':true">
         <td>{{report.date | date:'dd-MM-yyyy'}}</td>
         <td>{{report.comment}}</td>
         <td>{{report.hours}}</td>

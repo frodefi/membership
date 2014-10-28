@@ -1,5 +1,4 @@
-<div ng-show="model.user.account.username === model.data.thisUserUsername ||
-                          model.user.account.username === 'admin'">
+<div ng-hide="model.otherUser()">
   <div class="row">
     <div class="form-group">
       <label for="date" class="col-sm-3 control-label">Date</label>
@@ -9,6 +8,7 @@
           <input type="text"
                  id="date"
                  class="form-control"
+                 ng-focus="model.setViewMode(false); model.setShowHelp('date')"
                  datepicker-popup="{{model.datepicker.format}}"
                  ng-model="model.data.thisUser.newWorkReport.date"
                  is-open="model.datepicker.opened"

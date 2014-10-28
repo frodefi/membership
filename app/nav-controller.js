@@ -7,8 +7,8 @@ angular.module('app.controllers')
       $scope.nav.showWaitingForServer = false;
 
       $scope.nav.logout = function () {
-        if ($scope.user.authenticated) {
-          $scope.user.logout();
+        if (userService.authenticated) {
+          userService.logout();
         }
       };
 
@@ -16,8 +16,8 @@ angular.module('app.controllers')
         return viewLocation === $location.path();
       };
 
-      // alters.waiting indicated that app is communicating with the server, we may be done very quickly.
-      // Let us do the following to ensure that the spinning-wheel symbol does not disappear too quickly
+      // alters.waiting indicated that app is communicating with the server, but we may be done very quickly.
+      // So let us do the following to ensure that the spinning-wheel symbol does not disappear too fast
       $scope.$watch('alerts.waiting', function (newValue, oldValue) {
         if (newValue === 0 && oldValue > 0) {
           $timeout(function () {

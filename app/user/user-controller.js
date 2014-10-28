@@ -105,6 +105,7 @@ angular.module('app.controllers')
             delete tmpNewValue[1].lastModified; // and it changes after saving
             delete tmpOldValue[0].lastModified; // so let´s ignore it...
             delete tmpOldValue[1].lastModified;
+            console.log("Hey!");
             if (!angular.equals(tmpNewValue, tmpOldValue)) {
               if (!changed(newValue[0], $scope.model.user.pristine) && !changed(newValue[1], $scope.model.data.pristine)) {
                 removeListener();

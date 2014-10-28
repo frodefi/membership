@@ -32,7 +32,7 @@ angular.module('backendModule')
       };
 
       backendDataService.save = function (objectReference) {
-        data = angular.copy(objectReference);
+        var data = angular.copy(objectReference);
         console.log("backend-save:",data);
         delete data.createdAt;
         delete data.lastModified;
