@@ -2,7 +2,7 @@ Simple AngularJS Membership tool.
 =======
 This is my personal learning-Angular-project. See www.erty.com for a live version, just create an account and play around.
 
-First this memebership tool will be angled towards yacht clubs, and it is still in development (so not everything may work properly).
+First this memebership tool will be angled towards yacht clubs (as defined by the needs of a friend), and it is still in development (so not everything may work properly).
 
 For file structure, I have followed the "new" AngualJS recommendation, as seen here: https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/mobilebasic?pli=1
 
