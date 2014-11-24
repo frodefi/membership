@@ -6,7 +6,7 @@ First this memebership tool will be angled towards yacht clubs (as defined by th
 
 For file structure, I have followed the "new" AngualJS recommendation, as seen here: https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/mobilebasic?pli=1
 
-I have used Kinvey(.com) as the BaaS. I started to use Kinvey primarely due to their possibility to run scripts on the server side (as opposed to Firebase as I started out with). They have also a free plan. I am not using any serverside script for the Membership tools though. But the Kinvey-realted code is tucked away in a couple of small services that should be easily replaced with whatever backend you want to use.
+I have used Kinvey(.com) as the BaaS. I started to use Kinvey primarely due to the possibility to run scripts on the server side (as opposed to Firebase as I started out with). They have also a free plan. I am not using any serverside script for the Membership tool though. But the Kinvey-realted code is tucked away in a couple of small services that should be easy to replace with whatever backend you want to use.
 
 Of the various things that is on my todo-list, the most important thing is probably to make routes available according to who is allowed. I have found a very good description, that goes beyond the “standard” solution (at least when you look at the various tutorials out there): http://www.bfcamara.com/post/66001429506/authentication-in-a-spa-with-angular
 
