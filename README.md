@@ -12,7 +12,7 @@ Of the various things that is on my todo-list, the most important thing is proba
 
 If you want to download, then run you can try it out with 'grunt serve' only, building the distributed version is not yet set up correctly in Grunt. Actually, my Grunt setup has several issues, thats why some files have  "+" attached to it (file order problem due to my chosen filestruture). I definitely need to dig more into Grunt.
 
-Oh, and there are no tests yet, when I win some time in the lotteri, or somebody will pay me, I will dedicate time fro that :)
+Oh, and there are no tests yet, when I win some time in the lotteri, or somebody will pay me, I will dedicate time fro that...
 
 If you have any questions, do not esitate to ask!
 
